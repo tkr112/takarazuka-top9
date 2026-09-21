@@ -1,242 +1,1289 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>宝塚 好きなジェンヌ TOP9</title>
+<title>宝塚 好き顔ジェンヌ TOP9</title>
+
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  font-family: sans-serif;
-  background: linear-gradient(135deg, #fff0f6, #f2edff);
-  color: #493447;
-  text-align: center;
-}
-
-header {
-  background: #c65391;
-  color: white;
-  padding: 25px 12px;
-}
-
-h1 { font-size: 25px; margin: 0 0 8px; }
-main { max-width: 700px; margin: auto; padding: 18px; }
-
-.panel {
-  background: white;
-  border-radius: 18px;
-  padding: 18px;
-  margin: 16px 0;
-  box-shadow: 0 4px 15px #8c55751c;
-}
-
-textarea {
-  width: 100%;
-  min-height: 130px;
-  padding: 12px;
-  border: 1px solid #e0c6d7;
-  border-radius: 12px;
-  font-size: 16px;
+  background: #fffdfd;
+  color: #302c3b;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
 }
 
 button {
-  border: 0;
-  border-radius: 25px;
-  background: #c65391;
-  color: white;
-  padding: 12px 20px;
-  margin: 6px;
-  font-size: 15px;
-  cursor: pointer;
+  font-family: inherit;
 }
 
-button:disabled { opacity: .4; }
-.secondary { background: #8874b8; }
+.app {
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding: 24px 16px 50px;
+}
 
-#cards, #results {
+/* ---------- タイトル ---------- */
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 4px 0 5px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(25px, 7vw, 38px);
+  font-weight: 500;
+  letter-spacing: .05em;
+  color: #252842;
+}
+
+.subtitle {
+  font-size: 10px;
+  letter-spacing: .35em;
+  color: #8e8da0;
+}
+
+/* ---------- 進行状況 ---------- */
+
+.progress {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin: 28px 0 20px;
+}
+
+.progress-item {
+  text-align: center;
+  color: #aaa8b4;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.progress-circle {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  background: #e5e4e9;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  color: white;
+}
+
+.progress-item.active {
+  color: #db669a;
+  font-weight: 700;
+}
+
+.progress-item.active .progress-circle {
+  background: linear-gradient(135deg, #ec82b1, #d95991);
+}
+
+/* ---------- ステージ説明 ---------- */
+
+.stage-box {
+  background: linear-gradient(135deg, #f8f0fb, #fff1f6);
+  border-radius: 18px;
+  padding: 18px 18px;
+  margin-bottom: 18px;
+}
+
+.stage-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.stage-number {
+  font-family: "Yu Mincho", serif;
+  font-style: italic;
+  color: #e06a9f;
+  font-size: 17px;
+}
+
+.stage-title {
+  margin: 3px 0 0;
+  font-family: "Yu Mincho", serif;
+  font-size: 27px;
+}
+
+.stage-message {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #666477;
+}
+
+.counter {
+  min-width: 112px;
+  background: rgba(255,255,255,.85);
+  border-radius: 13px;
+  padding: 9px 10px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.counter strong {
+  color: #df679c;
+  font-size: 18px;
+}
+
+/* ---------- 4人カード ---------- */
+
+.cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 14px;
 }
 
-.person {
-  border: 2px solid #f0dce8;
-  border-radius: 14px;
-  padding: 18px 8px;
-  background: #fffafd;
+.card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 2px solid #eee9f0;
+  border-radius: 16px;
+  background: linear-gradient(#fff, #fff7fb);
   cursor: pointer;
-  overflow-wrap: anywhere;
+  transition: transform .15s ease, border .15s ease, box-shadow .15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.person.selected {
-  border-color: #c65391;
-  background: #ffe6f2;
+.card:active {
+  transform: scale(.98);
 }
 
-.person strong { display: block; font-size: 16px; }
-.person small { color: #8a7182; }
+.card.selected {
+  border-color: #df6aa0;
+  box-shadow: 0 5px 18px rgba(214, 86, 146, .18);
+}
 
-#status { font-weight: bold; margin: 12px; }
-#results { grid-template-columns: 1fr; }
+.photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #f0eef1;
+}
 
-.result {
+.photo-wrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.94);
+  border: 1px solid #ddd8df;
+  display: grid;
+  place-items: center;
+  color: transparent;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.card.selected .check {
+  color: white;
+  background: #dc659a;
+  border-color: #dc659a;
+}
+
+.person-info {
+  width: 100%;
+  height: 74px;
+  padding: 9px 5px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.group-name {
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #888293;
+  text-align: center;
+}
+
+.person-name {
+  width: 100%;
+  margin-top: 3px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(15px, 4.5vw, 20px);
+  line-height: 1.25;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ---------- ボタン ---------- */
+
+.actions {
+  margin-top: 20px;
+}
+
+.main-button {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  padding: 15px 16px;
+  background: linear-gradient(90deg, #e0649d, #d95692);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 5px 15px rgba(214, 86, 146, .20);
+}
+
+.main-button:disabled {
+  opacity: .45;
+}
+
+.sub-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.sub-button {
+  border: 1px solid #ddd9e1;
+  border-radius: 999px;
   background: white;
-  border-radius: 12px;
-  padding: 14px;
-  font-size: 18px;
-  border: 1px solid #eed5e4;
+  padding: 11px 5px;
+  color: #777386;
+  font-size: 12px;
 }
 
-.note { font-size: 13px; color: #806b7b; }
+/* ---------- 中間画面 ---------- */
 
-@media (max-width: 420px) {
-  h1 { font-size: 21px; }
-  main { padding: 10px; }
+.summary {
+  text-align: center;
+  padding: 35px 12px;
+}
+
+.summary-number {
+  margin: 12px 0;
+  color: #dc659a;
+  font-family: "Yu Mincho", serif;
+  font-size: 55px;
+  line-height: 1;
+}
+
+.summary h2 {
+  font-family: "Yu Mincho", serif;
+  font-size: 26px;
+}
+
+.summary p {
+  color: #777386;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+/* ---------- 50人・20人から選ぶ画面 ---------- */
+
+.selection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 8px;
+}
+
+.selection-grid .person-info {
+  height: 60px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.selection-grid .group-name {
+  font-size: 10px;
+}
+
+.selection-grid .person-name {
+  font-size: clamp(10px, 3vw, 14px);
+}
+
+.selection-grid .check {
+  width: 25px;
+  height: 25px;
+  top: 5px;
+  right: 5px;
+}
+
+.limit-info {
+  position: sticky;
+  top: 8px;
+  z-index: 20;
+  width: max-content;
+  max-width: 90%;
+  margin: 0 auto 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 3px 15px rgba(0,0,0,.09);
+  text-align: center;
+  font-size: 13px;
+}
+
+.limit-info strong {
+  color: #dc659a;
+  font-size: 17px;
+}
+
+/* ---------- TOP9 ---------- */
+
+.result-title {
+  text-align: center;
+  margin: 15px 0 24px;
+}
+
+.result-title h2 {
+  margin-bottom: 5px;
+  font-family: "Yu Mincho", serif;
+  font-size: 30px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 8px;
+}
+
+.result-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid #eee6eb;
+  background: #fff7fa;
+  text-align: center;
+}
+
+.result-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.rank {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  min-width: 28px;
+  padding: 4px 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.93);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.result-info {
+  min-height: 58px;
+  padding: 7px 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-group {
+  font-size: 9px;
+  color: #8c8792;
+}
+
+.result-name {
+  width: 100%;
+  margin-top: 2px;
+  font-family: "Yu Mincho", serif;
+  font-weight: 600;
+  font-size: clamp(10px, 3vw, 14px);
+  white-space: nowrap;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (min-width: 600px) {
+  .app {
+    padding-top: 35px;
+  }
+
+  .cards {
+    gap: 18px;
+  }
+
+  .selection-grid {
+    grid-template-columns: repeat(4, minmax(0,1fr));
+  }
 }
 </style>
 </head>
 
 <body>
-<header>
-  <h1>👑 宝塚 好きなジェンヌ TOP9</h1>
-  <div>あなたの「好き」を選んでね♡</div>
-</header>
 
-<main>
-  <section class="panel" id="setup">
-    <h2>🌸 候補者を登録しよう</h2>
-    <p>1行につき1人、名前を入力してね。</p>
-    <textarea id="names" placeholder="例：
-峰果とわ
-〇〇〇〇
-〇〇〇〇"></textarea>
-    <p class="note">最初は少人数で試して、あとから候補を増やせるよ。</p>
-    <button onclick="startGame()">候補者を決定してスタート！</button>
-  </section>
+<div class="app">
 
-  <section class="panel" id="game" hidden>
-    <h2>💗 好きなジェンヌを選ぼう</h2>
-    <div id="status"></div>
-    <div id="cards"></div>
-    <p id="count"></p>
-    <button class="secondary" onclick="resetGame()">最初からやり直す</button>
-  </section>
+  <header>
+    <h1>宝塚 好き顔ジェンヌ TOP9</h1>
+    <div class="subtitle">TAKARAZUKA FAVORITE FACES</div>
+  </header>
 
-  <section class="panel" id="finish" hidden>
-    <h2>👑 あなたの TOP9</h2>
-    <p>選んだ順番でランキングにしたよ！</p>
-    <div id="results"></div>
-    <button onclick="shareResult()">結果をコピー</button>
-    <button class="secondary" onclick="resetGame()">もう一度遊ぶ</button>
-    <p class="note">※このランキングは、あなたが選んだ順番です。</p>
-  </section>
-</main>
+  <div class="progress" id="progress"></div>
+
+  <div id="game"></div>
+
+</div>
+
+<script src="members.js"></script>
 
 <script>
-let candidates = [];
-let selected = [];
+/* =========================================================
+   基本データ
+========================================================= */
+
+const game = document.getElementById("game");
+const progress = document.getElementById("progress");
+
+let shuffledMembers = [];
+let preliminarySelected = [];
+
+let pageIndex = 0;
+let currentPageSelected = new Set();
+
+/* 50人・20人・9人選考用 */
+let selectionPool = [];
+let selectionSelected = new Set();
+let selectionLimit = 0;
+let selectionStage = "";
+
+/* 最終9人 */
+let finalNine = [];
+
+/* 順位決め */
+let ranking = [];
+let rankingCandidateIndex = 1;
+let rankingInsertIndex = 0;
+
+
+/* =========================================================
+   共通
+========================================================= */
+
+function shuffle(array) {
+  const copy = [...array];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy;
+}
+
+
+function setProgress(step) {
+  const labels = [
+    "予選",
+    "50人",
+    "20人",
+    "9人",
+    "TOP9"
+  ];
+
+  progress.innerHTML = labels.map((label, index) => `
+    <div class="progress-item ${index + 1 === step ? "active" : ""}">
+      <div class="progress-circle">${index + 1}</div>
+      <div>${label}</div>
+    </div>
+  `).join("");
+}
+
+
+function scrollTopSmooth() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* =========================================================
+   START
+========================================================= */
 
 function startGame() {
-  const input = document.getElementById("names").value;
-  candidates = [...new Set(
-    input.split(/\n/)
-      .map(name => name.trim())
-      .filter(name => name.length > 0)
-  )];
+  shuffledMembers = shuffle(members);
 
-  if (candidates.length < 9) {
-    alert("TOP9を作るには、候補者を9人以上入力してね！");
+  preliminarySelected = [];
+  pageIndex = 0;
+  currentPageSelected = new Set();
+
+  renderPreliminary();
+}
+
+
+/* =========================================================
+   予選
+   391人を4人ずつ
+   0〜4人まで自由に選択
+========================================================= */
+
+function renderPreliminary() {
+  setProgress(1);
+
+  const start = pageIndex * 4;
+  const pageMembers = shuffledMembers.slice(start, start + 4);
+
+  if (pageMembers.length === 0) {
+    finishPreliminary();
     return;
   }
 
-  selected = [];
-  document.getElementById("setup").hidden = true;
-  document.getElementById("finish").hidden = true;
-  document.getElementById("game").hidden = false;
-  renderCards();
+  currentPageSelected = new Set();
+
+  const end = Math.min(start + pageMembers.length, shuffledMembers.length);
+
+  game.innerHTML = `
+    <section class="stage-box">
+      <div class="stage-top">
+
+        <div>
+          <div class="stage-number">Stage 1</div>
+          <h2 class="stage-title">予選</h2>
+          <p class="stage-message">
+            好きな人を何人でも選んでください！
+          </p>
+        </div>
+
+        <div class="counter">
+          ${shuffledMembers.length}人中<br>
+          <strong>${start + 1}〜${end}</strong>人目
+          <br>
+          選んだ人数
+          <strong>${preliminarySelected.length}</strong>人
+        </div>
+
+      </div>
+    </section>
+
+    <div class="cards">
+
+      ${pageMembers.map(member => `
+        <div class="card"
+             data-id="${member.id}"
+             onclick="togglePreliminary(${member.id}, this)">
+
+          <div class="photo-wrap">
+            <img
+              src="${member.image}"
+              alt="${member.name}"
+            >
+            <div class="check">✓</div>
+          </div>
+
+          <div class="person-info">
+            <div class="group-name">
+              ${member.group}
+            </div>
+
+            <div class="person-name">
+              ${member.name}
+            </div>
+          </div>
+
+        </div>
+      `).join("")}
+
+    </div>
+
+    <div class="actions">
+
+      <button class="main-button"
+              onclick="nextPreliminaryPage()">
+        選択して次へ　›
+      </button>
+
+      <div class="sub-buttons">
+
+        <button
+          class="sub-button"
+          onclick="previousPreliminaryPage()"
+          ${pageIndex === 0 ? "disabled" : ""}
+        >
+          ‹ 前の4人
+        </button>
+
+        <button
+          class="sub-button"
+          onclick="nextPreliminaryPage()"
+        >
+          この4人は選ばない
+        </button>
+
+      </div>
+
+    </div>
+  `;
 }
 
-function renderCards() {
-  const cards = document.getElementById("cards");
-  cards.innerHTML = "";
 
-  document.getElementById("status").textContent =
-    `候補者 ${candidates.length}人から好きな9人を選んでね`;
+function togglePreliminary(id, element) {
 
-  document.getElementById("count").textContent =
-    `選択済み：${selected.length} / 9人`;
-
-  candidates.forEach(name => {
-    const isSelected = selected.includes(name);
-    const card = document.createElement("div");
-    card.className = "person" + (isSelected ? " selected" : "");
-    card.innerHTML = `<strong></strong><small></small>`;
-    card.querySelector("strong").textContent = name;
-    card.querySelector("small").textContent =
-      isSelected ? "♥ 選択中" : "タップして選ぶ";
-
-    card.onclick = () => togglePerson(name);
-    cards.appendChild(card);
-  });
-
-  if (selected.length === 9) {
-    const button = document.createElement("button");
-    button.textContent = "TOP9を完成させる！";
-    button.onclick = showResults;
-    cards.appendChild(button);
+  if (currentPageSelected.has(id)) {
+    currentPageSelected.delete(id);
+    element.classList.remove("selected");
+  } else {
+    currentPageSelected.add(id);
+    element.classList.add("selected");
   }
 }
 
-function togglePerson(name) {
-  if (selected.includes(name)) {
-    selected = selected.filter(item => item !== name);
+
+function saveCurrentPreliminaryPage() {
+
+  const start = pageIndex * 4;
+  const pageMembers = shuffledMembers.slice(start, start + 4);
+  const pageIds = new Set(pageMembers.map(member => member.id));
+
+  preliminarySelected =
+    preliminarySelected.filter(member => !pageIds.has(member.id));
+
+  currentPageSelected.forEach(id => {
+
+    const member = members.find(member => member.id === id);
+
+    if (member) {
+      preliminarySelected.push(member);
+    }
+
+  });
+}
+
+
+function nextPreliminaryPage() {
+
+  saveCurrentPreliminaryPage();
+
+  pageIndex++;
+
+  const start = pageIndex * 4;
+
+  if (start >= shuffledMembers.length) {
+    finishPreliminary();
+    return;
+  }
+
+  renderPreliminary();
+  scrollTopSmooth();
+}
+
+
+function previousPreliminaryPage() {
+
+  if (pageIndex === 0) return;
+
+  pageIndex--;
+
+  renderPreliminary();
+  scrollTopSmooth();
+}
+
+
+/* =========================================================
+   予選終了
+========================================================= */
+
+function finishPreliminary() {
+
+  if (preliminarySelected.length < 9) {
+
+    game.innerHTML = `
+      <div class="summary">
+
+        <h2>予選終了！</h2>
+
+        <div class="summary-number">
+          ${preliminarySelected.length}
+        </div>
+
+        <p>
+          ${preliminarySelected.length}人選びました。<br>
+          TOP9を作るには9人以上必要なので、<br>
+          もう一度予選から選んでください。
+        </p>
+
+        <button class="main-button"
+                onclick="startGame()">
+          もう一度予選する
+        </button>
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  /* 50人を超えている */
+  if (preliminarySelected.length > 50) {
+
+    showSummary(
+      preliminarySelected.length,
+      "予選通過！",
+      `次はこの${preliminarySelected.length}人から50人に絞ります。`,
+      () => startSelection(
+        preliminarySelected,
+        50,
+        "50人に絞る",
+        2
+      )
+    );
+
+    return;
+  }
+
+
+  /*
+    50人以下ならその人数のまま進む。
+    20人より多ければ20人へ。
+  */
+
+  if (preliminarySelected.length > 20) {
+
+    showSummary(
+      preliminarySelected.length,
+      "予選通過！",
+      `選んだ${preliminarySelected.length}人から20人に絞ります。`,
+      () => startSelection(
+        preliminarySelected,
+        20,
+        "20人に絞る",
+        3
+      )
+    );
+
+    return;
+  }
+
+
+  /*
+    20人以下・9人より多い場合は9人へ
+  */
+
+  if (preliminarySelected.length > 9) {
+
+    showSummary(
+      preliminarySelected.length,
+      "予選通過！",
+      `選んだ${preliminarySelected.length}人から9人に絞ります。`,
+      () => startSelection(
+        preliminarySelected,
+        9,
+        "9人に絞る",
+        4
+      )
+    );
+
+    return;
+  }
+
+
+  /* ちょうど9人 */
+  finalNine = [...preliminarySelected];
+  startRanking();
+}
+
+
+/* =========================================================
+   中間画面
+========================================================= */
+
+function showSummary(number, title, message, nextAction) {
+
+  game.innerHTML = `
+    <div class="summary">
+
+      <h2>${title}</h2>
+
+      <div class="summary-number">
+        ${number}
+      </div>
+
+      <p>${message}</p>
+
+      <button class="main-button" id="summaryNext">
+        次へ
+      </button>
+
+    </div>
+  `;
+
+  document.getElementById("summaryNext").onclick = nextAction;
+
+  scrollTopSmooth();
+}
+
+
+/* =========================================================
+   50人 / 20人 / 9人に絞る
+
+   ここでは候補者を一覧表示して、
+   必要人数ちょうど選択する
+========================================================= */
+
+function startSelection(pool, limit, title, progressStep) {
+
+  selectionPool = shuffle(pool);
+  selectionSelected = new Set();
+  selectionLimit = limit;
+  selectionStage = title;
+
+  renderSelection(progressStep);
+}
+
+
+function renderSelection(progressStep) {
+
+  setProgress(progressStep);
+
+  game.innerHTML = `
+
+    <section class="stage-box">
+
+      <div class="stage-number">
+        Selection
+      </div>
+
+      <h2 class="stage-title">
+        ${selectionStage}
+      </h2>
+
+      <p class="stage-message">
+        残したい人を${selectionLimit}人選んでください。
+      </p>
+
+    </section>
+
+
+    <div class="limit-info">
+      選択中　
+      <strong id="selectionCount">
+        ${selectionSelected.size}
+      </strong>
+      / ${selectionLimit}人
+    </div>
+
+
+    <div class="selection-grid">
+
+      ${selectionPool.map(member => `
+        <div
+          class="card"
+          data-selection-id="${member.id}"
+          onclick="toggleSelection(${member.id}, this)"
+        >
+
+          <div class="photo-wrap">
+
+            <img
+              src="${member.image}"
+              alt="${member.name}"
+            >
+
+            <div class="check">
+              ✓
+            </div>
+
+          </div>
+
+          <div class="person-info">
+
+            <div class="group-name">
+              ${member.group}
+            </div>
+
+            <div class="person-name">
+              ${member.name}
+            </div>
+
+          </div>
+
+        </div>
+      `).join("")}
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        id="selectionNext"
+        class="main-button"
+        onclick="finishSelection()"
+        disabled
+      >
+        ${selectionLimit}人を決定
+      </button>
+
+    </div>
+  `;
+
+  scrollTopSmooth();
+}
+
+
+function toggleSelection(id, element) {
+
+  if (selectionSelected.has(id)) {
+
+    selectionSelected.delete(id);
+    element.classList.remove("selected");
+
   } else {
-    if (selected.length >= 9) {
-      alert("選べるのは9人までだよ！");
+
+    if (selectionSelected.size >= selectionLimit) {
       return;
     }
-    selected.push(name);
+
+    selectionSelected.add(id);
+    element.classList.add("selected");
   }
-  renderCards();
+
+
+  document.getElementById("selectionCount").textContent =
+    selectionSelected.size;
+
+
+  document.getElementById("selectionNext").disabled =
+    selectionSelected.size !== selectionLimit;
 }
 
-function showResults() {
-  document.getElementById("game").hidden = true;
-  document.getElementById("finish").hidden = false;
 
-  const results = document.getElementById("results");
-  results.innerHTML = "";
+function finishSelection() {
 
-  selected.forEach((name, index) => {
-    const item = document.createElement("div");
-    item.className = "result";
-    item.textContent = `${["🥇","🥈","🥉"][index] || (index + 1 + "位")}　${name}`;
-    results.appendChild(item);
-  });
-}
+  const selected = selectionPool.filter(member =>
+    selectionSelected.has(member.id)
+  );
 
-function shareResult() {
-  const text = "👑 私の宝塚 好きなジェンヌ TOP9 👑\n\n" +
-    selected.map((name, i) => `${i + 1}位：${name}`).join("\n");
 
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text)
-      .then(() => alert("結果をコピーしたよ！"))
-      .catch(() => window.prompt("この結果をコピーしてね", text));
-  } else {
-    window.prompt("この結果をコピーしてね", text);
+  /* 50人を決めた後 */
+  if (selectionLimit === 50) {
+
+    showSummary(
+      50,
+      "50人が決定！",
+      "次はこの50人から20人に絞ります。",
+      () => startSelection(
+        selected,
+        20,
+        "20人に絞る",
+        3
+      )
+    );
+
+    return;
+  }
+
+
+  /* 20人を決めた後 */
+  if (selectionLimit === 20) {
+
+    showSummary(
+      20,
+      "20人が決定！",
+      "いよいよこの20人から9人を選びます。",
+      () => startSelection(
+        selected,
+        9,
+        "9人に絞る",
+        4
+      )
+    );
+
+    return;
+  }
+
+
+  /* 9人決定 */
+  if (selectionLimit === 9) {
+
+    finalNine = selected;
+
+    showSummary(
+      9,
+      "TOP9メンバー決定！",
+      "最後に、この9人の順位を決めます。",
+      startRanking
+    );
   }
 }
 
-function resetGame() {
-  document.getElementById("setup").hidden = false;
-  document.getElementById("game").hidden = true;
-  document.getElementById("finish").hidden = true;
-  selected = [];
+
+/* =========================================================
+   TOP9 順位決め
+
+   9人を2人ずつ比較して並べる
+========================================================= */
+
+function startRanking() {
+
+  setProgress(5);
+
+  finalNine = shuffle(finalNine);
+
+  ranking = [finalNine[0]];
+
+  rankingCandidateIndex = 1;
+  rankingInsertIndex = 0;
+
+  renderRankingComparison();
 }
+
+
+function renderRankingComparison() {
+
+  if (rankingCandidateIndex >= finalNine.length) {
+    renderResult();
+    return;
+  }
+
+
+  const candidate =
+    finalNine[rankingCandidateIndex];
+
+  const opponent =
+    ranking[rankingInsertIndex];
+
+
+  game.innerHTML = `
+
+    <section class="stage-box">
+
+      <div class="stage-number">
+        Final
+      </div>
+
+      <h2 class="stage-title">
+        TOP9順位決め
+      </h2>
+
+      <p class="stage-message">
+        より好きな顔をタップしてください。
+      </p>
+
+    </section>
+
+
+    <div class="cards">
+
+      ${rankingCard(candidate, "candidate")}
+
+      ${rankingCard(opponent, "opponent")}
+
+    </div>
+
+
+    <p style="
+      text-align:center;
+      color:#8c8792;
+      font-size:12px;
+      margin-top:18px;
+    ">
+      あと少しでTOP9完成！
+    </p>
+  `;
+
+  scrollTopSmooth();
+}
+
+
+function rankingCard(member, type) {
+
+  return `
+    <div class="card"
+         onclick="chooseRanking('${type}')">
+
+      <div class="photo-wrap">
+
+        <img
+          src="${member.image}"
+          alt="${member.name}"
+        >
+
+      </div>
+
+      <div class="person-info">
+
+        <div class="group-name">
+          ${member.group}
+        </div>
+
+        <div class="person-name">
+          ${member.name}
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+function chooseRanking(type) {
+
+  const candidate =
+    finalNine[rankingCandidateIndex];
+
+
+  /*
+    candidateの方が好き
+  */
+  if (type === "candidate") {
+
+    ranking.splice(
+      rankingInsertIndex,
+      0,
+      candidate
+    );
+
+    rankingCandidateIndex++;
+    rankingInsertIndex = 0;
+
+    renderRankingComparison();
+    return;
+  }
+
+
+  /*
+    opponentの方が好き
+    → candidateを1つ下と比較
+  */
+
+  rankingInsertIndex++;
+
+
+  /*
+    最後までcandidateが勝てなかった
+    → 一番下へ
+  */
+  if (rankingInsertIndex >= ranking.length) {
+
+    ranking.push(candidate);
+
+    rankingCandidateIndex++;
+    rankingInsertIndex = 0;
+  }
+
+
+  renderRankingComparison();
+}
+
+
+/* =========================================================
+   結果
+========================================================= */
+
+function renderResult() {
+
+  setProgress(5);
+
+  game.innerHTML = `
+
+    <div class="result-title">
+
+      <h2>
+        あなたの好き顔 TOP9
+      </h2>
+
+      <div class="subtitle">
+        MY TAKARAZUKA FAVORITE FACES
+      </div>
+
+    </div>
+
+
+    <div class="result-grid">
+
+      ${ranking.map((member, index) => `
+
+        <div class="result-card">
+
+          <div class="rank">
+            ${index + 1}位
+          </div>
+
+          <img
+            src="${member.image}"
+            alt="${member.name}"
+          >
+
+          <div class="result-info">
+
+            <div class="result-group">
+              ${member.group}
+            </div>
+
+            <div class="result-name">
+              ${member.name}
+            </div>
+
+          </div>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="main-button"
+        onclick="startGame()"
+      >
+        もう一度やる
+      </button>
+
+    </div>
+  `;
+
+  scrollTopSmooth();
+}
+
+
+/* =========================================================
+   起動
+========================================================= */
+
+startGame();
+
 </script>
+
 </body>
 </html>
