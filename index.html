@@ -1788,7 +1788,34 @@ function previousPreliminary() {
   }
 
 }
+function preloadNextPreliminary() {
 
+  const nextStart =
+    (state.page + 1) * PRELIMINARY_SIZE;
+
+  const nextIds =
+    state.order.slice(
+      nextStart,
+      nextStart + PRELIMINARY_SIZE
+    );
+
+  nextIds.forEach(id => {
+
+    const member =
+      memberById(id);
+
+    if (!member) {
+      return;
+    }
+
+    const image =
+      new Image();
+
+    image.src =
+      member.image;
+
+  });
+}
 
 function nextPreliminary() {
 
