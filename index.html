@@ -2235,3 +2235,1141 @@ function finishNarrowing() {
 /* =====================
    最終9人 順位決定
 ===================== */
+  function startRanking(ids) {
+
+  if (ids.length !== 9) {
+    beginNarrowing(ids);
+    return;
+  }
+
+  state.stage = "rank";
+  state.rankPool = shuffle(ids);
+  state.ranked = [state.rankPool[0]];
+  state.insertIndex = 1;
+  state.comparePos = 0;
+
+  saveState();
+  renderRanking();
+}
+
+
+function renderRanking() {
+
+  if (state.insertIndex >= state.rankPool.length) {
+    finishResult();
+    return;
+  }
+
+  const challenger =
+    state.rankPool[state.insertIndex];
+
+  const opponent =
+    state.ranked[state.comparePos];
+
+  app.innerHTML =
+    progressHeader(4)
+    +
+    `
+    <div class="panel">
+
+      <div>
+        <span class="badge">
+          順位決定
+        </span>
+
+        <h2>
+          より好きな顔を選んでください
+        </h2>
+      </div>
+
+      <div class="stats">
+        順位づけ
+        <b>
+          ${state.insertIndex + 1}/9
+        </b>
+      </div>
+
+    </div>
+
+
+    <div class="duel-title">
+      どっちがより好き？
+    </div>
+
+
+    <div class="duel">
+
+      ${personCard(
+        memberById(challenger),
+        false,
+        `chooseDuel(${challenger})`
+      )}
+
+      ${personCard(
+        memberById(opponent),
+        false,
+        `chooseDuel(${opponent})`
+      )}
+
+    </div>
+
+
+    <div class="notice">
+      タップした方を上位として並べていきます
+    </div>
+    `;
+}
+
+
+function chooseDuel(id) {
+
+  const challenger =
+    state.rankPool[state.insertIndex];
+
+  if (id === challenger) {
+
+    state.ranked.splice(
+      state.comparePos,
+      0,
+      challenger
+    );
+
+    state.insertIndex++;
+    state.comparePos = 0;
+
+  }
+
+  else if (
+    state.comparePos >=
+    state.ranked.length - 1
+  ) {
+
+    state.ranked.push(challenger);
+
+    state.insertIndex++;
+    state.comparePos = 0;
+
+  }
+
+  else {
+
+    state.comparePos++;
+
+  }
+
+  saveState();
+  renderRanking();
+}
+
+
+/* =====================
+   結果
+===================== */
+
+function finishResult() {
+
+  state.result =
+    [...state.ranked];
+
+  state.stage =
+    "result";
+
+  let history = [];
+
+  try {
+
+    history =
+      JSON.parse(
+        localStorage.getItem(HISTORY_KEY)
+        || "[]"
+      );
+
+  }
+  catch {}
+
+
+  history.unshift({
+
+    id: Date.now(),
+
+    date:
+      new Date().toLocaleString("ja-JP"),
+
+    result:
+      [...state.result]
+
+  });
+
+
+  localStorage.setItem(
+    HISTORY_KEY,
+    JSON.stringify(
+      history.slice(0, 20)
+    )
+  );
+
+  saveState();
+  renderResult();
+}
+
+
+function rankCard(member, index) {
+
+  let rankClass = "";
+
+  if (index === 0) {
+    rankClass = "gold";
+  }
+
+  else if (index === 1) {
+    rankClass = "silver";
+  }
+
+  else if (index === 2) {
+    rankClass = "bronze";
+  }
+
+
+  return `
+    <div class="rank-card ${rankClass}">
+
+      <div class="rank-no">
+        ${index + 1}
+      </div>
+
+      <div class="photo">
+
+        <img
+          src="${member.image}"
+          alt="${escapeHTML(member.name)}"
+        >
+
+      </div>
+
+      <div class="info">
+
+        <div
+          class="group"
+          style="color:${member.color}"
+        >
+          ${escapeHTML(member.group)}
+        </div>
+
+        <div class="name">
+          ${escapeHTML(member.name)}
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+function renderResult(ids = state.result) {
+
+  if (!ids) {
+    renderHome();
+    return;
+  }
+
+  state.result =
+    [...ids];
+
+  app.innerHTML =
+    progressHeader(5)
+    +
+    `
+    <div class="panel">
+
+      <div>
+
+        <span class="badge">
+          完成♡
+        </span>
+
+        <h2>
+          あなたの宝塚好き顔 9選
+        </h2>
+
+      </div>
+
+      <div class="stats">
+        TOP
+        <b>9</b>
+      </div>
+
+    </div>
+
+
+    <div class="rank-grid">
+
+      ${ids.map(
+        (id, index) =>
+          rankCard(
+            memberById(id),
+            index
+          )
+      ).join("")}
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        onclick="prepareResultImage()"
+      >
+        画像を保存する
+      </button>
+
+
+      <div class="row">
+
+        <button
+          class="secondary"
+          onclick="showHistory()"
+        >
+          過去の結果
+        </button>
+
+        <button
+          class="secondary"
+          onclick="goHome()"
+        >
+          トップへ戻る
+        </button>
+
+      </div>
+
+    </div>
+    `;
+}
+
+
+/* =====================
+   ホームへ
+===================== */
+
+function goHome() {
+
+  state =
+    freshState();
+
+  saveState();
+  renderHome();
+}
+
+
+/* =====================
+   履歴
+===================== */
+
+function showHistory() {
+
+  let history = [];
+
+  try {
+
+    history =
+      JSON.parse(
+        localStorage.getItem(HISTORY_KEY)
+        || "[]"
+      );
+
+  }
+  catch {}
+
+
+  app.innerHTML =
+    progressHeader(5)
+    +
+    `
+    <div class="panel">
+
+      <div>
+
+        <span class="badge">
+          保存済み
+        </span>
+
+        <h2>
+          過去の結果
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div class="history">
+
+      ${history.map(
+        (item, index) => {
+
+          const first =
+            memberById(item.result[0]);
+
+          return `
+            <div class="history-item">
+
+              <div>
+
+                <b>
+                  ${
+                    first
+                    ? escapeHTML(first.name)
+                    : "結果"
+                  }
+                </b>
+
+                <br>
+
+                <small>
+                  ${escapeHTML(item.date)}
+                </small>
+
+              </div>
+
+              <button
+                class="secondary"
+                style="width:auto;"
+                onclick="openHistory(${index})"
+              >
+                この結果を見る
+              </button>
+
+            </div>
+          `;
+        }
+      ).join("")}
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="secondary"
+        onclick="renderHome()"
+      >
+        戻る
+      </button>
+
+    </div>
+    `;
+}
+
+
+function openHistory(index) {
+
+  const history =
+    JSON.parse(
+      localStorage.getItem(HISTORY_KEY)
+      || "[]"
+    );
+
+  if (!history[index]) {
+    return;
+  }
+
+  state.result =
+    [...history[index].result];
+
+  renderResult(state.result);
+}
+
+
+/* =====================
+   画像読み込み
+===================== */
+
+function loadImage(src) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const image =
+        new Image();
+
+      image.onload =
+        () => resolve(image);
+
+      image.onerror =
+        reject;
+
+      image.src =
+        src;
+
+    }
+  );
+}
+
+
+/* =====================
+   Canvas 補助
+===================== */
+
+function roundedRectangle(
+  context,
+  x,
+  y,
+  width,
+  height,
+  radius,
+  fill,
+  stroke
+) {
+
+  context.beginPath();
+
+  if (context.roundRect) {
+
+    context.roundRect(
+      x,
+      y,
+      width,
+      height,
+      radius
+    );
+
+  }
+
+  else {
+
+    context.moveTo(
+      x + radius,
+      y
+    );
+
+    context.lineTo(
+      x + width - radius,
+      y
+    );
+
+    context.quadraticCurveTo(
+      x + width,
+      y,
+      x + width,
+      y + radius
+    );
+
+    context.lineTo(
+      x + width,
+      y + height - radius
+    );
+
+    context.quadraticCurveTo(
+      x + width,
+      y + height,
+      x + width - radius,
+      y + height
+    );
+
+    context.lineTo(
+      x + radius,
+      y + height
+    );
+
+    context.quadraticCurveTo(
+      x,
+      y + height,
+      x,
+      y + height - radius
+    );
+
+    context.lineTo(
+      x,
+      y + radius
+    );
+
+    context.quadraticCurveTo(
+      x,
+      y,
+      x + radius,
+      y
+    );
+
+    context.closePath();
+
+  }
+
+
+  if (fill) {
+    context.fill();
+  }
+
+  if (stroke) {
+    context.stroke();
+  }
+}
+
+
+function drawCover(
+  context,
+  image,
+  x,
+  y,
+  width,
+  height
+) {
+
+  const scale =
+    Math.max(
+      width / image.width,
+      height / image.height
+    );
+
+  const newWidth =
+    image.width * scale;
+
+  const newHeight =
+    image.height * scale;
+
+
+  context.drawImage(
+    image,
+
+    x + (width - newWidth) / 2,
+    y + (height - newHeight) / 2,
+
+    newWidth,
+    newHeight
+  );
+}
+
+
+/* =====================
+   TOP9画像を作る
+===================== */
+
+async function makeResultCanvas(
+  ids = state.result
+) {
+
+  if (!ids || ids.length !== 9) {
+    throw new Error("結果がありません");
+  }
+
+
+  const width =
+    1080;
+
+  const height =
+    1440;
+
+
+  const canvas =
+    document.createElement("canvas");
+
+  canvas.width =
+    width;
+
+  canvas.height =
+    height;
+
+
+  const context =
+    canvas.getContext("2d");
+
+
+  context.fillStyle =
+    "#fff9fc";
+
+  context.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  context.textAlign =
+    "center";
+
+  context.fillStyle =
+    "#29293a";
+
+  context.font =
+    '800 62px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+
+  context.fillText(
+    "宝塚好き顔 9選",
+    width / 2,
+    95
+  );
+
+
+  const margin =
+    54;
+
+  const gap =
+    22;
+
+  const cardWidth =
+    (
+      width
+      - margin * 2
+      - gap * 2
+    ) / 3;
+
+  const cardHeight =
+    380;
+
+  const startY =
+    145;
+
+
+  for (
+    let index = 0;
+    index < 9;
+    index++
+  ) {
+
+    const member =
+      memberById(ids[index]);
+
+    if (!member) {
+      continue;
+    }
+
+
+    const column =
+      index % 3;
+
+    const row =
+      Math.floor(index / 3);
+
+
+    const x =
+      margin
+      +
+      column
+      *
+      (cardWidth + gap);
+
+    const y =
+      startY
+      +
+      row
+      *
+      (cardHeight + gap);
+
+
+    let borderColor =
+      "#e9e4e8";
+
+    if (index === 0) {
+      borderColor = "#d7ad24";
+    }
+
+    else if (index === 1) {
+      borderColor = "#aeb6c2";
+    }
+
+    else if (index === 2) {
+      borderColor = "#bf7a42";
+    }
+
+
+    context.fillStyle =
+      "#ffffff";
+
+    context.strokeStyle =
+      borderColor;
+
+    context.lineWidth =
+      index < 3
+      ? 9
+      : 4;
+
+
+    roundedRectangle(
+      context,
+      x,
+      y,
+      cardWidth,
+      cardHeight,
+      22,
+      true,
+      true
+    );
+
+
+    try {
+
+      const image =
+        await loadImage(
+          member.image
+        );
+
+
+      context.save();
+
+
+      roundedRectangle(
+        context,
+        x + 5,
+        y + 5,
+        cardWidth - 10,
+        275,
+        17,
+        false,
+        false
+      );
+
+
+      context.clip();
+
+
+      drawCover(
+        context,
+        image,
+        x + 5,
+        y + 5,
+        cardWidth - 10,
+        275
+      );
+
+
+      context.restore();
+
+    }
+
+    catch {}
+
+
+    context.fillStyle =
+      member.color;
+
+    context.font =
+      '800 26px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
+
+    context.fillText(
+      member.group,
+      x + cardWidth / 2,
+      y + 315
+    );
+
+
+    context.fillStyle =
+      "#29293a";
+
+    context.font =
+      '800 31px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
+
+    context.fillText(
+      member.name,
+      x + cardWidth / 2,
+      y + 355
+    );
+
+
+    if (index === 0) {
+      context.fillStyle = "#f5cf49";
+    }
+
+    else if (index === 1) {
+      context.fillStyle = "#dce1e7";
+    }
+
+    else if (index === 2) {
+      context.fillStyle = "#d99761";
+    }
+
+    else {
+      context.fillStyle = "#f4eff2";
+    }
+
+
+    context.beginPath();
+
+    context.arc(
+      x + 32,
+      y + 32,
+      25,
+      0,
+      Math.PI * 2
+    );
+
+    context.fill();
+
+
+    context.fillStyle =
+      "#29293a";
+
+    context.font =
+      "900 25px sans-serif";
+
+    context.fillText(
+      String(index + 1),
+      x + 32,
+      y + 41
+    );
+  }
+
+
+  context.fillStyle =
+    "#a68d99";
+
+  context.font =
+    "500 22px sans-serif";
+
+  context.fillText(
+    new Date().toLocaleDateString("ja-JP"),
+    width / 2,
+    height - 28
+  );
+
+
+  return canvas;
+}
+
+
+/* =====================
+   iPhone用 画像保存
+===================== */
+
+let preparedImageFile =
+  null;
+
+let preparedImageURL =
+  null;
+
+
+async function prepareResultImage() {
+
+  try {
+
+    const canvas =
+      await makeResultCanvas(
+        state.result
+      );
+
+
+    const blob =
+      await new Promise(
+        resolve =>
+          canvas.toBlob(
+            resolve,
+            "image/png"
+          )
+      );
+
+
+    if (!blob) {
+      throw new Error(
+        "画像を作成できませんでした"
+      );
+    }
+
+
+    preparedImageFile =
+      new File(
+        [blob],
+        "takarazuka-top9.png",
+        {
+          type:"image/png"
+        }
+      );
+
+
+    if (preparedImageURL) {
+      URL.revokeObjectURL(
+        preparedImageURL
+      );
+    }
+
+
+    preparedImageURL =
+      URL.createObjectURL(blob);
+
+
+    showImagePreview();
+
+  }
+
+  catch (error) {
+
+    alert(
+      "画像の作成に失敗しました。"
+    );
+
+    console.error(error);
+
+  }
+}
+
+
+function showImagePreview() {
+
+  const overlay =
+    document.createElement("div");
+
+
+  overlay.className =
+    "image-preview";
+
+
+  overlay.innerHTML = `
+
+    <img
+      src="${preparedImageURL}"
+      alt="宝塚好き顔9選"
+    >
+
+
+    <div class="preview-text">
+
+      画像ができました♡
+
+      <br>
+
+      iPhoneは下のボタンから
+      「画像を保存」を選べます。
+
+      <br>
+
+      うまくいかない場合は
+      上の画像を長押しして保存してね。
+
+    </div>
+
+
+    <div class="preview-buttons">
+
+      <button
+        class="primary"
+        onclick="sharePreparedImage()"
+      >
+        共有して保存
+      </button>
+
+
+      <button
+        class="secondary"
+        style="margin-top:8px;"
+        onclick="closeImagePreview()"
+      >
+        閉じる
+      </button>
+
+    </div>
+  `;
+
+
+  document.body.appendChild(
+    overlay
+  );
+}
+
+
+async function sharePreparedImage() {
+
+  if (!preparedImageFile) {
+    return;
+  }
+
+
+  if (
+    navigator.share
+    &&
+    (
+      !navigator.canShare
+      ||
+      navigator.canShare({
+        files:[
+          preparedImageFile
+        ]
+      })
+    )
+  ) {
+
+    try {
+
+      await navigator.share({
+        files:[
+          preparedImageFile
+        ],
+        title:
+          "宝塚好き顔 9選"
+      });
+
+      return;
+
+    }
+
+    catch (error) {
+
+      if (
+        error.name ===
+        "AbortError"
+      ) {
+        return;
+      }
+
+    }
+
+  }
+
+
+  alert(
+    "上の画像を長押しして「写真に保存」を選んでね！"
+  );
+}
+
+
+function closeImagePreview() {
+
+  const preview =
+    document.querySelector(
+      ".image-preview"
+    );
+
+  if (preview) {
+    preview.remove();
+  }
+}
+
+
+/* =====================
+   表示
+===================== */
+
+function render() {
+
+  if (state.stage === "home") {
+    renderHome();
+  }
+
+  else if (state.stage === "prelim") {
+    renderPreliminary();
+  }
+
+  else if (state.stage === "narrow") {
+    renderNarrowing();
+  }
+
+  else if (state.stage === "rank") {
+    renderRanking();
+  }
+
+  else if (state.stage === "result") {
+    renderResult();
+  }
+
+  else {
+    renderHome();
+  }
+}
+
+
+render();
+
+
+</script>
+
+</body>
+
+</html>
