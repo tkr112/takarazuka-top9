@@ -86,6 +86,7 @@ const memberGroups = [
     group: "月組",
     folder: "tsukigumi",
     start: 78,
+    extension: "JPG",
     names: `鳳月杏
 天紫珠李
 梨花ますみ
