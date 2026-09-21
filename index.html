@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宝塚 好きなジェンヌ TOP9</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: linear-gradient(135deg, #fff0f6, #f2edff);
+  color: #493447;
+  text-align: center;
+}
+
+header {
+  background: #c65391;
+  color: white;
+  padding: 25px 12px;
+}
+
+h1 { font-size: 25px; margin: 0 0 8px; }
+main { max-width: 700px; margin: auto; padding: 18px; }
+
+.panel {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin: 16px 0;
+  box-shadow: 0 4px 15px #8c55751c;
+}
+
+textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 12px;
+  border: 1px solid #e0c6d7;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+button {
+  border: 0;
+  border-radius: 25px;
+  background: #c65391;
+  color: white;
+  padding: 12px 20px;
+  margin: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:disabled { opacity: .4; }
+.secondary { background: #8874b8; }
+
+#cards, #results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.person {
+  border: 2px solid #f0dce8;
+  border-radius: 14px;
+  padding: 18px 8px;
+  background: #fffafd;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.person.selected {
+  border-color: #c65391;
+  background: #ffe6f2;
+}
+
+.person strong { display: block; font-size: 16px; }
+.person small { color: #8a7182; }
+
+#status { font-weight: bold; margin: 12px; }
+#results { grid-template-columns: 1fr; }
+
+.result {
+  background: white;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 18px;
+  border: 1px solid #eed5e4;
+}
+
+.note { font-size: 13px; color: #806b7b; }
+
+@media (max-width: 420px) {
+  h1 { font-size: 21px; }
+  main { padding: 10px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>👑 宝塚 好きなジェンヌ TOP9</h1>
+  <div>あなたの「好き」を選んでね♡</div>
+</header>
+
+<main>
+  <section class="panel" id="setup">
+    <h2>🌸 候補者を登録しよう</h2>
+    <p>1行につき1人、名前を入力してね。</p>
+    <textarea id="names" placeholder="例：
+峰果とわ
+〇〇〇〇
+〇〇〇〇"></textarea>
+    <p class="note">最初は少人数で試して、あとから候補を増やせるよ。</p>
+    <button onclick="startGame()">候補者を決定してスタート！</button>
+  </section>
+
+  <section class="panel" id="game" hidden>
+    <h2>💗 好きなジェンヌを選ぼう</h2>
+    <div id="status"></div>
+    <div id="cards"></div>
+    <p id="count"></p>
+    <button class="secondary" onclick="resetGame()">最初からやり直す</button>
+  </section>
+
+  <section class="panel" id="finish" hidden>
+    <h2>👑 あなたの TOP9</h2>
+    <p>選んだ順番でランキングにしたよ！</p>
+    <div id="results"></div>
+    <button onclick="shareResult()">結果をコピー</button>
+    <button class="secondary" onclick="resetGame()">もう一度遊ぶ</button>
+    <p class="note">※このランキングは、あなたが選んだ順番です。</p>
+  </section>
+</main>
+
+<script>
+let candidates = [];
+let selected = [];
+
+function startGame() {
+  const input = document.getElementById("names").value;
+  candidates = [...new Set(
+    input.split(/\n/)
+      .map(name => name.trim())
+      .filter(name => name.length > 0)
+  )];
+
+  if (candidates.length < 9) {
+    alert("TOP9を作るには、候補者を9人以上入力してね！");
+    return;
+  }
+
+  selected = [];
+  document.getElementById("setup").hidden = true;
+  document.getElementById("finish").hidden = true;
+  document.getElementById("game").hidden = false;
+  renderCards();
+}
+
+function renderCards() {
+  const cards = document.getElementById("cards");
+  cards.innerHTML = "";
+
+  document.getElementById("status").textContent =
+    `候補者 ${candidates.length}人から好きな9人を選んでね`;
+
+  document.getElementById("count").textContent =
+    `選択済み：${selected.length} / 9人`;
+
+  candidates.forEach(name => {
+    const isSelected = selected.includes(name);
+    const card = document.createElement("div");
+    card.className = "person" + (isSelected ? " selected" : "");
+    card.innerHTML = `<strong></strong><small></small>`;
+    card.querySelector("strong").textContent = name;
+    card.querySelector("small").textContent =
+      isSelected ? "♥ 選択中" : "タップして選ぶ";
+
+    card.onclick = () => togglePerson(name);
+    cards.appendChild(card);
+  });
+
+  if (selected.length === 9) {
+    const button = document.createElement("button");
+    button.textContent = "TOP9を完成させる！";
+    button.onclick = showResults;
+    cards.appendChild(button);
+  }
+}
+
+function togglePerson(name) {
+  if (selected.includes(name)) {
+    selected = selected.filter(item => item !== name);
+  } else {
+    if (selected.length >= 9) {
+      alert("選べるのは9人までだよ！");
+      return;
+    }
+    selected.push(name);
+  }
+  renderCards();
+}
+
+function showResults() {
+  document.getElementById("game").hidden = true;
+  document.getElementById("finish").hidden = false;
+
+  const results = document.getElementById("results");
+  results.innerHTML = "";
+
+  selected.forEach((name, index) => {
+    const item = document.createElement("div");
+    item.className = "result";
+    item.textContent = `${["🥇","🥈","🥉"][index] || (index + 1 + "位")}　${name}`;
+    results.appendChild(item);
+  });
+}
+
+function shareResult() {
+  const text = "👑 私の宝塚 好きなジェンヌ TOP9 👑\n\n" +
+    selected.map((name, i) => `${i + 1}位：${name}`).join("\n");
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert("結果をコピーしたよ！"))
+      .catch(() => window.prompt("この結果をコピーしてね", text));
+  } else {
+    window.prompt("この結果をコピーしてね", text);
+  }
+}
+
+function resetGame() {
+  document.getElementById("setup").hidden = false;
+  document.getElementById("game").hidden = true;
+  document.getElementById("finish").hidden = true;
+  selected = [];
+}
+</script>
+</body>
+</html>
