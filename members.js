@@ -1,8 +1,10 @@
-const memberGroups = [
+const GROUPS = [
   {
-    group: "花組",
-    folder: "hanagumi",
+    key: "hanagumi",
+    name: "花組",
     start: 1,
+    ext: "JPEG",
+    color: "#f58ab6",
     names: `永久輝せあ
 星空美咲
 美風舞良
@@ -83,10 +85,11 @@ const memberGroups = [
   },
 
   {
-    group: "月組",
-    folder: "tsukigumi",
+    key: "tsukigumi",
+    name: "月組",
     start: 78,
-    extension: "JPG",
+    ext: "JPG",
+    color: "#f4dc55",
     names: `鳳月杏
 天紫珠李
 梨花ますみ
@@ -162,9 +165,11 @@ const memberGroups = [
   },
 
   {
-    group: "雪組",
-    folder: "yukigumi",
+    key: "yukigumi",
+    name: "雪組",
     start: 150,
+    ext: "JPEG",
+    color: "#72dcb5",
     names: `朝美絢
 音彩唯
 透真かずき
@@ -241,9 +246,11 @@ const memberGroups = [
   },
 
   {
-    group: "星組",
-    folder: "hoshigumi",
+    key: "hoshigumi",
+    name: "星組",
     start: 223,
+    ext: "JPEG",
+    color: "#78c9ef",
     names: `暁千星
 詩ちづる
 美稀千種
@@ -325,9 +332,11 @@ const memberGroups = [
   },
 
   {
-    group: "宙組",
-    folder: "soragumi",
+    key: "soragumi",
+    name: "宙組",
     start: 301,
+    ext: "JPG",
+    color: "#c7a8f4",
     names: `桜木みなと
 春乃さくら
 水美舞斗
@@ -404,9 +413,11 @@ const memberGroups = [
   },
 
   {
-    group: "専科",
-    folder: "senka",
+    key: "senka",
+    name: "専科",
     start: 374,
+    ext: "JPEG",
+    color: "#7c4bc7",
     names: `英真なおき
 京三紗
 汝鳥伶
@@ -425,29 +436,33 @@ const memberGroups = [
   },
 
   {
-    group: "研1",
-    folder: "ken1",
+    key: "ken1",
+    name: "研1",
     start: 389,
+    ext: "JPG",
+    color: "#f5a23b",
     names: `仁彩斗
 葉月瑶
 月路あゆ`
   }
 ];
 
-const members = memberGroups.flatMap(group =>
-  group.names
-    .trim()
-    .split("\n")
-    .map((name, index) => {
-      const number = group.start + index;
+const members = GROUPS.flatMap(group =>
+  group.names.trim().split("\n").map((name, index) => {
+    const id = group.start + index;
 
-      return {
-        id: number,
-        name: name.trim(),
-        group: group.group,
-        image: `images/${group.folder}/${number}.JPEG`
-      };
-    })
+    return {
+      id: id,
+      name: name.trim(),
+      group: group.name,
+      groupKey: group.key,
+      color: group.color,
+      image: `images/${group.key}/${id}.${group.ext}`
+    };
+  })
 );
+
+window.MEMBERS = members;
+window.GROUPS = GROUPS;
 
 console.log(`登録人数：${members.length}人`);
