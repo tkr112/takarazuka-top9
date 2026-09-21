@@ -1,4 +1,4 @@
-const GROUPS = [
+ const GROUPS = [
   {
     key: "hanagumi",
     name: "花組",
@@ -447,22 +447,61 @@ const GROUPS = [
   }
 ];
 
-const members = GROUPS.flatMap(group =>
-  group.names.trim().split("\n").map((name, index) => {
-    const id = group.start + index;
 
-    return {
-      id: id,
-      name: name.trim(),
-      group: group.name,
-      groupKey: group.key,
-      color: group.color,
-      image: `images/${group.key}/${id}.${group.ext}`
-    };
-  })
+const members = GROUPS.flatMap(group =>
+
+  group.names
+    .trim()
+    .split("\n")
+    .map((name, index) => {
+
+      const id =
+        group.start + index;
+
+      /*
+        274番・絢咲羽蘭だけ
+        JPG。
+        それ以外は組ごとの拡張子。
+      */
+
+      const extension =
+        id === 274
+          ? "JPG"
+          : group.ext;
+
+      return {
+
+        id: id,
+
+        name:
+          name.trim(),
+
+        group:
+          group.name,
+
+        groupKey:
+          group.key,
+
+        color:
+          group.color,
+
+        image:
+          `images/${group.key}/${id}.${extension}`
+
+      };
+
+    })
+
 );
 
-window.MEMBERS = members;
-window.GROUPS = GROUPS;
 
-console.log(`登録人数：${members.length}人`);
+window.MEMBERS =
+  members;
+
+window.GROUPS =
+  GROUPS;
+
+
+console.log(
+  `登録人数：${members.length}人`
+);
