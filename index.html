@@ -2885,86 +2885,52 @@ function drawCover(
    ピンク版 TOP9画像
 ===================== */
 
-async function makeResultCanvas(
-  ids = state.result
-) {
+async function makeResultCanvas(ids = state.result) {
 
-  if (
-    !ids ||
-    ids.length !== 9
-  ) {
-
-    throw new Error(
-      "結果がありません"
-    );
-
+  if (!ids || ids.length !== 9) {
+    throw new Error("結果がありません");
   }
 
+  const width = 1080;
+  const height = 1800;
 
-  const width =
-    1080;
+  const canvas = document.createElement("canvas");
 
+  canvas.width = width;
+  canvas.height = height;
 
-  const height =
-    1440;
-
-
-  const canvas =
-    document.createElement(
-      "canvas"
-    );
+  const context = canvas.getContext("2d");
 
 
-  canvas.width =
-    width;
-
-
-  canvas.height =
-    height;
-
-
-  const context =
-    canvas.getContext(
-      "2d"
-    );
-
-
-  /* 背景 */
+  /* =========================
+     背景
+  ========================= */
 
   const background =
-
     context.createLinearGradient(
-
       0,
       0,
-
       0,
       height
-
     );
-
 
   background.addColorStop(
     0,
     "#fffafd"
   );
 
-
   background.addColorStop(
-    0.55,
-    "#fff4f8"
+    0.48,
+    "#fff6fa"
   );
-
 
   background.addColorStop(
     1,
-    "#ffeef5"
+    "#fff0f6"
   );
-
 
   context.fillStyle =
     background;
-
 
   context.fillRect(
     0,
@@ -2974,101 +2940,90 @@ async function makeResultCanvas(
   );
 
 
-  /* ピンク装飾 */
+  /* =========================
+     背景の淡いピンク装飾
+  ========================= */
 
-  function blob(
+  function pinkShape(
     x,
     y,
-    rx,
-    ry,
-    alpha
+    width,
+    height,
+    rotation
   ) {
 
     context.save();
 
+    context.translate(
+      x,
+      y
+    );
+
+    context.rotate(
+      rotation
+    );
 
     context.globalAlpha =
-      alpha;
-
+      0.18;
 
     context.fillStyle =
-      "#ed77a5";
-
+      "#f7b7ce";
 
     context.beginPath();
 
-
     context.ellipse(
-
-      x,
-      y,
-
-      rx,
-      ry,
-
-      -0.18,
-
       0,
-
+      0,
+      width,
+      height,
+      0,
+      0,
       Math.PI * 2
-
     );
 
-
     context.fill();
-
 
     context.restore();
 
   }
 
 
-  blob(
+  pinkShape(
+    40,
     60,
-    80,
-    170,
-    42,
-    .11
-  );
-
-
-  blob(
-    1030,
-    150,
-    175,
-    48,
-    .10
-  );
-
-
-  blob(
-    25,
-    730,
-    120,
-    50,
-    .07
-  );
-
-
-  blob(
-    1050,
-    810,
-    125,
-    52,
-    .08
-  );
-
-
-  blob(
-    90,
-    1375,
     180,
-    44,
-    .07
+    35,
+    -0.18
+  );
+
+  pinkShape(
+    1050,
+    80,
+    180,
+    35,
+    -0.18
+  );
+
+  pinkShape(
+    10,
+    1710,
+    190,
+    38,
+    -0.18
+  );
+
+  pinkShape(
+    1060,
+    1700,
+    190,
+    38,
+    -0.18
   );
 
 
-  /* キラキラ */
+  /* =========================
+     キラキラ
+  ========================= */
 
   function sparkle(
     x,
@@ -3078,44 +3033,35 @@ async function makeResultCanvas(
 
     context.save();
 
-
     context.strokeStyle =
-      "#e8a1bb";
-
+      "#e996b7";
 
     context.lineWidth =
-      2;
-
+      3;
 
     context.beginPath();
-
 
     context.moveTo(
       x,
       y - size
     );
 
-
     context.lineTo(
       x,
       y + size
     );
-
 
     context.moveTo(
       x - size,
       y
     );
 
-
     context.lineTo(
       x + size,
       y
     );
 
-
     context.stroke();
-
 
     context.restore();
 
@@ -3123,103 +3069,161 @@ async function makeResultCanvas(
 
 
   sparkle(
-    70,
-    105,
-    11
+    137,
+    166,
+    15
   );
 
-
   sparkle(
-    1005,
-    105,
+    945,
+    184,
     13
   );
 
 
-  sparkle(
-    1015,
-    1280,
-    10
-  );
-
-
-  sparkle(
-    55,
-    1290,
-    9
-  );
-
-
-  /* 英字タイトル */
+  /* =========================
+     英語タイトル
+  ========================= */
 
   context.textAlign =
     "center";
 
-
   context.fillStyle =
-    "#b98b9d";
-
+    "#b78298";
 
   context.font =
-    '600 25px Georgia, serif';
-
+    '600 26px Georgia, serif';
 
   context.fillText(
-
     "M Y   T A K A R A Z U K A   T O P   9",
-
     width / 2,
-
-    58
-
+    92
   );
 
 
-  /* 日本語タイトル */
+  /* =========================
+     日本語タイトル
+  ========================= */
 
-  context.fillStyle =
-    "#4a3d47";
+  const titleY =
+    178;
 
 
   context.font =
-    '800 55px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+    '800 59px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
 
 
-  context.fillText(
-
-    "宝塚 好き顔",
-
-    width / 2,
-
-    125
-
-  );
+  const before =
+    "宝塚 好き顔 ";
 
 
-  context.fillStyle =
-    "#ed6e9d";
+  const nine =
+    "9";
+
+
+  const after =
+    " 選";
+
+
+  const beforeWidth =
+    context.measureText(
+      before
+    ).width;
 
 
   context.font =
-    '800 68px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+    '900 82px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+
+
+  const nineWidth =
+    context.measureText(
+      nine
+    ).width;
+
+
+  context.font =
+    '800 59px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+
+
+  const afterWidth =
+    context.measureText(
+      after
+    ).width;
+
+
+  const totalTitleWidth =
+    beforeWidth +
+    nineWidth +
+    afterWidth;
+
+
+  let titleX =
+    (
+      width -
+      totalTitleWidth
+    ) / 2;
+
+
+  context.textAlign =
+    "left";
+
+
+  context.fillStyle =
+    "#593442";
+
+  context.font =
+    '800 59px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
 
 
   context.fillText(
-
-    "9選",
-
-    width / 2,
-
-    198
-
+    before,
+    titleX,
+    titleY
   );
 
 
-  /* ハートとライン */
+  titleX +=
+    beforeWidth;
+
+
+  context.fillStyle =
+    "#ed5f93";
+
+  context.font =
+    '900 82px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+
+
+  context.fillText(
+    nine,
+    titleX,
+    titleY + 2
+  );
+
+
+  titleX +=
+    nineWidth;
+
+
+  context.fillStyle =
+    "#593442";
+
+  context.font =
+    '800 59px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+
+
+  context.fillText(
+    after,
+    titleX,
+    titleY
+  );
+
+
+  /* =========================
+     タイトル下のライン
+  ========================= */
 
   context.strokeStyle =
-    "#efb4c9";
-
+    "#eaa1bd";
 
   context.lineWidth =
     2;
@@ -3227,91 +3231,104 @@ async function makeResultCanvas(
 
   context.beginPath();
 
-
   context.moveTo(
-    260,
-    238
+    180,
+    242
   );
-
 
   context.lineTo(
-    475,
-    238
+    450,
+    242
   );
-
 
   context.moveTo(
-    605,
-    238
+    630,
+    242
   );
-
 
   context.lineTo(
-    820,
-    238
+    900,
+    242
   );
-
 
   context.stroke();
 
 
-  context.fillStyle =
-    "#e98aad";
+  context.textAlign =
+    "center";
 
+  context.fillStyle =
+    "#e87fa7";
 
   context.font =
-    "29px serif";
-
+    "38px serif";
 
   context.fillText(
-
     "♡",
-
     width / 2,
-
-    247
-
+    254
   );
 
 
-  /* =====================
-     3×3
-  ===================== */
+  /* =========================
+     カード設定
+  ========================= */
 
-  const margin =
-    48;
+  const marginX =
+    62;
 
+  const gapX =
+    28;
 
-  const gap =
-    18;
+  const gapY =
+    28;
 
 
   const cardWidth =
-
     (
-      width
-      -
-      margin * 2
-      -
-      gap * 2
-    )
-
-    /
-
-    3;
+      width -
+      marginX * 2 -
+      gapX * 2
+    ) / 3;
 
 
   const cardHeight =
-    315;
-
-
-  const imageHeight =
-    222;
+    414;
 
 
   const startY =
-    278;
+    292;
 
+
+  const imageMargin =
+    14;
+
+
+  const imageWidth =
+    cardWidth -
+    imageMargin * 2;
+
+
+  const imageHeight =
+    305;
+
+
+  const rankColors = [
+    "#e9bd24",
+    "#9fa8aa",
+    "#c77d50",
+    "#e961a0",
+    "#42add0",
+    "#e7b22b",
+    "#5fc3aa",
+    "#df70ad",
+    "#9d6bd1"
+  ];
+
+
+  /* =========================
+     9人
+  ========================= */
 
   for (
     let index = 0;
@@ -3320,7 +3337,6 @@ async function makeResultCanvas(
   ) {
 
     const member =
-
       memberById(
         ids[index]
       );
@@ -3342,143 +3358,81 @@ async function makeResultCanvas(
 
 
     const x =
-
-      margin
-
-      +
-
+      marginX +
       column *
       (
         cardWidth +
-        gap
+        gapX
       );
 
 
     const y =
-
-      startY
-
-      +
-
+      startY +
       row *
       (
         cardHeight +
-        20
+        gapY
       );
 
 
-    /* 白カード */
+    /* =====================
+       カード影
+    ===================== */
 
     context.save();
 
-
     context.shadowColor =
-      "rgba(126,76,98,.13)";
-
+      "rgba(183,106,137,.15)";
 
     context.shadowBlur =
-      17;
-
+      25;
 
     context.shadowOffsetY =
-      6;
-
+      10;
 
     context.fillStyle =
       "#ffffff";
 
-
     roundedRectangle(
-
       context,
-
       x,
       y,
-
       cardWidth,
       cardHeight,
-
-      22,
-
+      24,
       true,
-
       false
-
     );
-
 
     context.restore();
 
 
-    /* 枠 */
+    /* =====================
+       白カード
+    ===================== */
 
-    if (
-      index === 0
-    ) {
-
-      context.strokeStyle =
-        "#d6b340";
-
-    }
-
-    else if (
-      index === 1
-    ) {
-
-      context.strokeStyle =
-        "#aebbc5";
-
-    }
-
-    else if (
-      index === 2
-    ) {
-
-      context.strokeStyle =
-        "#c78a62";
-
-    }
-
-    else {
-
-      context.strokeStyle =
-        "#efa6c0";
-
-    }
-
-
-    context.lineWidth =
-
-      index < 3
-      ? 6
-      : 4;
-
+    context.fillStyle =
+      "#ffffff";
 
     roundedRectangle(
-
       context,
-
       x,
       y,
-
       cardWidth,
       cardHeight,
-
-      22,
-
-      false,
-
-      true
-
+      24,
+      true,
+      false
     );
 
 
-    /* 写真 */
+    /* =====================
+       写真
+    ===================== */
 
     try {
 
       const image =
-
         await loadImage(
           member.image
         );
@@ -3488,21 +3442,18 @@ async function makeResultCanvas(
 
 
       roundedRectangle(
-
         context,
 
-        x + 7,
-        y + 7,
+        x + imageMargin,
+        y + imageMargin,
 
-        cardWidth - 14,
+        imageWidth,
         imageHeight,
 
-        16,
+        17,
 
         false,
-
         false
-
       );
 
 
@@ -3510,17 +3461,14 @@ async function makeResultCanvas(
 
 
       drawCover(
-
         context,
-
         image,
 
-        x + 7,
-        y + 7,
+        x + imageMargin,
+        y + imageMargin,
 
-        cardWidth - 14,
+        imageWidth,
         imageHeight
-
       );
 
 
@@ -3531,142 +3479,136 @@ async function makeResultCanvas(
     catch {}
 
 
-    /* 順位丸 */
+    /* =====================
+       順位丸
+    ===================== */
+
+    const rankX =
+      x + 10;
+
+
+    const rankY =
+      y + 20;
+
+
+    const rankRadius =
+      39;
+
+
+    context.save();
+
+
+    context.shadowColor =
+      "rgba(0,0,0,.08)";
+
+    context.shadowBlur =
+      8;
+
 
     context.beginPath();
 
-
     context.arc(
-
-      x + 30,
-
-      y + 30,
-
-      22,
-
+      rankX,
+      rankY,
+      rankRadius,
       0,
-
       Math.PI * 2
-
     );
 
 
-    if (
-      index === 0
-    ) {
-
-      context.fillStyle =
-        "#f1cf59";
-
-    }
-
-    else if (
-      index === 1
-    ) {
-
-      context.fillStyle =
-        "#dce2e7";
-
-    }
-
-    else if (
-      index === 2
-    ) {
-
-      context.fillStyle =
-        "#dda078";
-
-    }
-
-    else {
-
-      context.fillStyle =
-        "#f7d4e1";
-
-    }
+    context.fillStyle =
+      rankColors[index];
 
 
     context.fill();
 
 
+    context.lineWidth =
+      4;
+
+
+    context.strokeStyle =
+      "#ffffff";
+
+
+    context.stroke();
+
+
+    context.restore();
+
+
+    context.textAlign =
+      "center";
+
+
     context.fillStyle =
-      "#4a3d47";
+      "#ffffff";
 
 
     context.font =
-      "900 22px sans-serif";
+      '800 34px -apple-system, BlinkMacSystemFont, sans-serif';
 
 
     context.fillText(
-
       String(
         index + 1
       ),
-
-      x + 30,
-
-      y + 38
-
+      rankX,
+      rankY + 12
     );
 
 
-    /* 組名 */
+    /* =====================
+       組名
+    ===================== */
 
     context.fillStyle =
-
-      member.color
-
-      ||
-
+      member.color ||
       "#d66b96";
 
 
     context.font =
-      '800 19px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
+      '800 23px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
 
 
     context.fillText(
-
       member.group,
-
-      x +
-      cardWidth / 2,
-
-      y + 255
-
+      x + cardWidth / 2,
+      y + 350
     );
 
 
-    /* 名前 */
+    /* =====================
+       名前
+    ===================== */
 
     context.fillStyle =
-      "#403744";
+      "#34465b";
 
 
     context.font =
-      '800 25px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
+      '800 29px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
 
 
     context.fillText(
-
       member.name,
-
-      x +
-      cardWidth / 2,
-
-      y + 288
-
+      x + cardWidth / 2,
+      y + 391
     );
 
   }
 
 
-  /* =====================
-     下部
-  ===================== */
+  /* =========================
+     下部装飾
+  ========================= */
+
+  const footerY =
+    1660;
+
 
   context.strokeStyle =
-    "#efb4c9";
+    "#e9a1bc";
 
 
   context.lineWidth =
@@ -3677,71 +3619,81 @@ async function makeResultCanvas(
 
 
   context.moveTo(
-    300,
-    1335
+    220,
+    footerY
   );
 
 
   context.lineTo(
-    470,
-    1335
+    455,
+    footerY
   );
 
 
   context.moveTo(
-    610,
-    1335
+    625,
+    footerY
   );
 
 
   context.lineTo(
-    780,
-    1335
+    860,
+    footerY
   );
 
 
   context.stroke();
 
 
-  context.fillStyle =
-    "#e98aad";
+  /* ダイヤ */
+
+  context.save();
 
 
-  context.font =
-    "30px serif";
-
-
-  context.fillText(
-
-    "✧",
-
+  context.translate(
     width / 2,
-
-    1345
-
+    footerY
   );
 
 
-  /* 日付 */
+  context.rotate(
+    Math.PI / 4
+  );
+
+
+  context.strokeStyle =
+    "#e787aa";
+
+
+  context.lineWidth =
+    2;
+
+
+  context.strokeRect(
+    -9,
+    -9,
+    18,
+    18
+  );
+
+
+  context.restore();
+
+
+  /* =========================
+     日付
+  ========================= */
 
   const today =
-
     new Date()
 
       .toLocaleDateString(
-
         "ja-JP",
-
         {
-
           year:"numeric",
-
           month:"2-digit",
-
           day:"2-digit"
-
         }
-
       )
 
       .replaceAll(
@@ -3750,30 +3702,29 @@ async function makeResultCanvas(
       );
 
 
+  context.textAlign =
+    "center";
+
+
   context.fillStyle =
-    "#aa8d99";
+    "#b98499";
 
 
   context.font =
-    '500 22px Georgia, serif';
+    '500 24px Georgia, serif';
 
 
   context.fillText(
-
     today,
-
     width / 2,
-
-    1395
-
+    1728
   );
 
 
   return canvas;
 
 }
-
-
+  
 /* =====================
    iPhone用画像保存
 ===================== */
