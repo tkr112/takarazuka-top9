@@ -1,9 +1,7 @@
 <!doctype html>
-
 <html lang="ja">
 
 <head>
-
 <meta charset="utf-8">
 
 <meta
@@ -16,46 +14,28 @@
   content="#fff8fb"
 >
 
-<title>
-  宝塚好き顔 9選
-</title>
-
+<title>宝塚好き顔 9選</title>
 
 <style>
 
 :root {
-
   --pink:#ed5f93;
-
   --pink-light:#ff91b7;
-
   --text:#29293a;
-
   --muted:#858596;
-
 }
-
 
 * {
   box-sizing:border-box;
 }
 
-
 html {
   -webkit-text-size-adjust:100%;
 }
 
-
 body {
-
   margin:0;
-
-  background:
-    linear-gradient(
-      #fffafd,
-      #ffffff
-    );
-
+  background:linear-gradient(#fffafd,#ffffff);
   color:var(--text);
 
   font-family:
@@ -65,64 +45,40 @@ body {
     "Yu Gothic",
     "Meiryo",
     sans-serif;
-
 }
-
 
 button {
   font:inherit;
 }
 
-
 .app {
-
   width:100%;
-
   max-width:520px;
-
   min-height:100vh;
-
   margin:auto;
-
-  padding:
-    12px
-    12px
-    34px;
-
+  padding:12px 12px 34px;
 }
 
+
+/* =====================
+   タイトル
+===================== */
 
 header {
-
   text-align:center;
-
-  margin:
-    3px
-    0
-    8px;
-
+  margin:3px 0 8px;
 }
-
 
 h1 {
-
   margin:0;
-
   font-size:25px;
-
   font-weight:800;
-
 }
-
 
 .nine {
-
   color:var(--pink);
-
   font-size:1.25em;
-
 }
-
 
 .spark {
   color:#f5aac3;
@@ -133,117 +89,67 @@ h1 {
    進行状況
 ===================== */
 
-
 .steps {
-
   display:flex;
-
-  margin:
-    8px
-    4px
-    11px;
-
+  margin:8px 4px 11px;
 }
-
 
 .step {
-
   flex:1;
-
   position:relative;
-
   text-align:center;
-
   color:#9a9aa8;
-
   font-size:9px;
-
   font-weight:700;
-
 }
-
 
 .step:not(:last-child)::before {
-
   content:"";
-
   position:absolute;
-
   top:12px;
-
   left:58%;
-
   width:84%;
-
   height:2px;
-
   background:#e7e4e8;
-
 }
 
-
 .dot {
-
   position:relative;
-
   z-index:1;
-
   width:25px;
-
   height:25px;
-
-  margin:
-    0 auto
-    3px;
+  margin:0 auto 3px;
 
   display:grid;
-
   place-items:center;
 
   border-radius:50%;
-
   background:#e8e8ed;
-
   font-size:11px;
-
 }
-
 
 .step.on {
   color:var(--pink);
 }
 
-
 .step.on .dot {
-
   color:white;
-
   background:var(--pink);
-
 }
 
 
 /* =====================
-   上部説明
+   説明パネル
 ===================== */
 
-
 .panel {
-
   display:flex;
-
   align-items:center;
-
-  justify-content:
-    space-between;
-
+  justify-content:space-between;
   gap:8px;
 
   margin-bottom:9px;
-
-  padding:
-    9px
-    11px;
+  padding:9px 11px;
 
   border-radius:14px;
 
@@ -253,97 +159,59 @@ h1 {
       #fff0f6,
       #fff7fa
     );
-
 }
 
-
 .badge {
-
   display:inline-block;
 
-  padding:
-    4px
-    10px;
+  padding:4px 10px;
 
   border-radius:999px;
 
   background:var(--pink);
-
   color:white;
 
   font-size:10px;
-
   font-weight:800;
-
 }
-
 
 .panel h2 {
-
-  margin:
-    5px
-    0
-    0;
-
+  margin:5px 0 0;
   font-size:14px;
-
 }
-
 
 .stats {
-
   text-align:right;
-
   white-space:nowrap;
-
   font-size:9px;
-
 }
 
-
 .stats b {
-
   display:block;
-
   color:var(--pink);
-
   font-size:16px;
-
 }
 
 
 /* =====================
-   通常カード 2×2
+   通常カード
 ===================== */
 
-
 .cards {
-
   display:grid;
 
   grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
+    repeat(2,minmax(0,1fr));
 
   gap:8px;
-
 }
 
-
 .card {
-
   position:relative;
-
   min-width:0;
-
   overflow:hidden;
 
-  border:
-    2px solid
-    transparent;
-
+  border:2px solid transparent;
   border-radius:12px;
 
   background:white;
@@ -351,133 +219,83 @@ h1 {
   box-shadow:
     0 4px 14px
     rgba(77,53,80,.07);
-
 }
 
-
 .card.selected {
-
-  border-color:
-    var(--pink);
+  border-color:var(--pink);
 
   box-shadow:
     0 5px 18px
     rgba(237,95,147,.19);
-
 }
-
 
 .photo {
-
-  aspect-ratio:
-    1 / 1.10;
-
+  aspect-ratio:1 / 1.10;
   overflow:hidden;
-
   background:#f0edf1;
-
 }
-
 
 .photo img {
-
   display:block;
-
   width:100%;
-
   height:100%;
-
   object-fit:cover;
-
 }
 
-
 .info {
-
   height:53px;
 
-  padding:
-    5px
-    4px;
+  padding:5px 4px;
 
   display:flex;
-
   flex-direction:column;
-
   justify-content:center;
 
   text-align:center;
-
 }
-
 
 .group {
-
   font-size:10px;
-
   font-weight:800;
-
 }
 
-
 .name {
-
   margin-top:2px;
 
   overflow:hidden;
-
   text-overflow:ellipsis;
-
   white-space:nowrap;
 
   font-size:14px;
-
   font-weight:750;
-
 }
 
-
 .check {
-
   position:absolute;
 
   top:5px;
-
   right:5px;
 
   width:23px;
-
   height:23px;
 
   display:grid;
-
   place-items:center;
 
-  border:
-    1.5px solid
-    #777;
-
+  border:1.5px solid #777;
   border-radius:50%;
 
   background:white;
-
   color:white;
 
   font-size:13px;
-
   font-weight:900;
-
 }
-
 
 .selected .check {
-
   border-color:white;
-
   background:var(--pink);
-
 }
-
 
 .selected .check::after {
   content:"✓";
@@ -485,79 +303,48 @@ h1 {
 
 
 /* =====================
-   予選だけ 3×3
+   予選 3×3
 ===================== */
 
-
 .preliminary-grid {
-
   display:grid;
 
   grid-template-columns:
-    repeat(
-      3,
-      minmax(0,1fr)
-    );
+    repeat(3,minmax(0,1fr));
 
   gap:6px;
-
 }
-
 
 .preliminary-grid .card {
-
   border-radius:10px;
-
 }
-
 
 .preliminary-grid .photo {
-
-  aspect-ratio:
-    1 / 1.12;
-
+  aspect-ratio:1 / 1.12;
 }
-
 
 .preliminary-grid .info {
-
   height:42px;
-
-  padding:
-    3px
-    2px;
-
+  padding:3px 2px;
 }
-
 
 .preliminary-grid .group {
-
   font-size:8px;
-
 }
-
 
 .preliminary-grid .name {
-
   margin-top:1px;
-
   font-size:10px;
-
 }
 
-
 .preliminary-grid .check {
-
   top:4px;
-
   right:4px;
 
   width:19px;
-
   height:19px;
 
   font-size:11px;
-
 }
 
 
@@ -565,30 +352,19 @@ h1 {
    ボタン
 ===================== */
 
-
 .actions {
-
   margin-top:10px;
-
 }
-
 
 .primary,
 .secondary {
-
   width:100%;
-
   border:0;
-
   border-radius:999px;
-
   font-weight:800;
-
 }
 
-
 .primary {
-
   padding:12px;
 
   background:
@@ -599,61 +375,37 @@ h1 {
     );
 
   color:white;
-
   font-size:14px;
-
 }
-
 
 .primary:disabled {
-
   opacity:.4;
-
 }
-
 
 .row {
-
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
+  grid-template-columns:1fr 1fr;
 
   gap:8px;
-
   margin-top:7px;
-
 }
 
-
 .secondary {
+  padding:9px 5px;
 
-  padding:
-    9px
-    5px;
-
-  border:
-    1px solid
-    #e4dfe5;
+  border:1px solid #e4dfe5;
 
   background:white;
-
   color:#737381;
 
   font-size:11px;
-
 }
-
 
 .secondary:disabled {
-
   opacity:.4;
-
 }
 
-
 .notice {
-
   margin:9px 0;
 
   text-align:center;
@@ -661,7 +413,6 @@ h1 {
   color:#8a8790;
 
   font-size:11px;
-
 }
 
 
@@ -669,12 +420,8 @@ h1 {
    ホーム
 ===================== */
 
-
 .start-card {
-
-  padding:
-    18px
-    14px;
+  padding:18px 14px;
 
   border-radius:18px;
 
@@ -685,61 +432,38 @@ h1 {
   box-shadow:
     0 6px 25px
     rgba(103,74,96,.08);
-
 }
-
 
 .start-card p {
-
   color:#777;
-
   font-size:12px;
-
   line-height:1.7;
-
 }
 
-
 .menu {
-
   display:grid;
-
   gap:9px;
-
   margin-top:14px;
-
 }
 
 
 /* =====================
-   順位決定
+   2択
 ===================== */
 
-
 .duel {
-
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns:1fr 1fr;
   gap:9px;
-
 }
 
-
 .duel-title {
-
-  margin:
-    8px
-    0;
+  margin:8px 0;
 
   text-align:center;
 
   font-size:14px;
-
   font-weight:800;
-
 }
 
 
@@ -747,81 +471,50 @@ h1 {
    結果
 ===================== */
 
-
 .rank-grid {
-
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:7px;
-
 }
 
-
 .rank-card {
-
   position:relative;
 
   overflow:hidden;
 
-  border:
-    2px solid
-    transparent;
-
+  border:2px solid transparent;
   border-radius:11px;
 
   background:white;
-
 }
-
 
 .rank-card .photo {
-
-  aspect-ratio:
-    1 / 1.08;
-
+  aspect-ratio:1 / 1.08;
 }
-
 
 .rank-card .info {
-
   height:48px;
-
 }
-
 
 .rank-card .name {
-
   font-size:11px;
-
 }
-
 
 .rank-card .group {
-
   font-size:9px;
-
 }
 
-
 .rank-no {
-
   position:absolute;
-
   z-index:2;
 
   top:4px;
-
   left:4px;
 
   min-width:25px;
-
   height:25px;
 
   display:grid;
-
   place-items:center;
 
   border-radius:50%;
@@ -829,51 +522,31 @@ h1 {
   background:white;
 
   font-size:12px;
-
   font-weight:900;
-
 }
-
 
 .rank-card.gold {
-
   border-color:#d7ad24;
-
 }
-
 
 .rank-card.gold .rank-no {
-
   background:#f5cf49;
-
 }
-
 
 .rank-card.silver {
-
   border-color:#aeb6c2;
-
 }
-
 
 .rank-card.silver .rank-no {
-
   background:#dce1e7;
-
 }
-
 
 .rank-card.bronze {
-
   border-color:#bf7a42;
-
 }
 
-
 .rank-card.bronze .rank-no {
-
   background:#d99761;
-
 }
 
 
@@ -881,39 +554,26 @@ h1 {
    保存画像プレビュー
 ===================== */
 
-
 .image-preview {
-
   position:fixed;
-
   z-index:9999;
 
   inset:0;
 
-  padding:
-    20px
-    14px;
+  padding:20px 14px;
 
   display:flex;
-
   flex-direction:column;
-
   justify-content:center;
 
-  background:
-    rgba(20,20,30,.92);
-
+  background:rgba(20,20,30,.92);
 }
 
-
 .image-preview img {
-
   display:block;
 
   width:100%;
-
   max-width:440px;
-
   max-height:75vh;
 
   margin:auto;
@@ -921,103 +581,76 @@ h1 {
   object-fit:contain;
 
   border-radius:12px;
-
 }
 
-
 .preview-text {
-
-  margin:
-    12px
-    0
-    8px;
+  margin:12px 0 8px;
 
   color:white;
 
   text-align:center;
 
   font-size:13px;
-
   line-height:1.6;
-
 }
-
 
 .preview-buttons {
-
   width:100%;
-
   max-width:440px;
-
   margin:auto;
-
 }
 
+
+/* =====================
+   履歴
+===================== */
 
 .history {
-
   display:grid;
-
   gap:9px;
-
 }
 
-
 .history-item {
-
   display:flex;
 
   align-items:center;
-
-  justify-content:
-    space-between;
+  justify-content:space-between;
 
   gap:8px;
 
   padding:10px;
 
-  border:
-    1px solid
-    #eee7ec;
-
+  border:1px solid #eee7ec;
   border-radius:13px;
 
   background:white;
-
 }
-
 
 .history-item small {
   color:#999;
 }
 
-
 </style>
-
 </head>
 
 
 <body>
-
 
 <div
   class="app"
   id="app"
 ></div>
 
-
 <script src="members.js"></script>
 
-
 <script>
-
 
 const app =
   document.querySelector("#app");
 
 
 const SAVE_KEY =
-  "takarazukaTop9StateV4";
+  "takarazukaTop9StateV5";
 
 
 const HISTORY_KEY =
@@ -1035,7 +668,6 @@ const NARROW_SIZE =
 /* =====================
    状態
 ===================== */
-
 
 function freshState() {
 
@@ -1107,9 +739,7 @@ function saveState() {
 
     SAVE_KEY,
 
-    JSON.stringify(
-      state
-    )
+    JSON.stringify(state)
 
   );
 
@@ -1119,7 +749,6 @@ function saveState() {
 /* =====================
    基本
 ===================== */
-
 
 function memberById(id) {
 
@@ -1138,14 +767,9 @@ function shuffle(array) {
 
 
   for (
-
-    let i =
-      result.length - 1;
-
+    let i = result.length - 1;
     i > 0;
-
     i--
-
   ) {
 
     const j =
@@ -1199,7 +823,6 @@ function escapeHTML(value) {
    ヘッダー
 ===================== */
 
-
 function progressHeader(active) {
 
   const labels = [
@@ -1210,7 +833,7 @@ function progressHeader(active) {
 
     "20人",
 
-    "9人",
+    "順位",
 
     "結果"
 
@@ -1283,7 +906,6 @@ function progressHeader(active) {
 /* =====================
    人物カード
 ===================== */
-
 
 function personCard(
 
@@ -1373,7 +995,6 @@ function personCard(
    ホーム
 ===================== */
 
-
 function renderHome() {
 
   let history = [];
@@ -1423,7 +1044,15 @@ function renderHome() {
 
         <br>
 
-        50人 → 20人 → 9人へ。
+        50人 → 20人へ。
+
+        <br>
+
+        最後は20人を2択で比べて
+
+        <br>
+
+        TOP9を決めます。
 
         <br>
 
@@ -1521,7 +1150,6 @@ function renderHome() {
    スタート
 ===================== */
 
-
 function startGame() {
 
   state =
@@ -1550,9 +1178,8 @@ function startGame() {
 
 
 /* =====================
-   予選 9人ずつ
+   予選
 ===================== */
-
 
 function renderPreliminary() {
 
@@ -1732,6 +1359,9 @@ function renderPreliminary() {
 
     `;
 
+
+  preloadNextPreliminary();
+
 }
 
 
@@ -1788,34 +1418,50 @@ function previousPreliminary() {
   }
 
 }
+
+
 function preloadNextPreliminary() {
 
   const nextStart =
-    (state.page + 1) * PRELIMINARY_SIZE;
+
+    (state.page + 1) *
+    PRELIMINARY_SIZE;
+
 
   const nextIds =
+
     state.order.slice(
+
       nextStart,
-      nextStart + PRELIMINARY_SIZE
+
+      nextStart +
+      PRELIMINARY_SIZE
+
     );
+
 
   nextIds.forEach(id => {
 
     const member =
       memberById(id);
 
+
     if (!member) {
       return;
     }
 
+
     const image =
       new Image();
+
 
     image.src =
       member.image;
 
   });
+
 }
+
 
 function nextPreliminary() {
 
@@ -1871,9 +1517,8 @@ function nextPreliminary() {
 
 
 /* =====================
-   50 → 20 → 9
+   50人 → 20人
 ===================== */
-
 
 function beginNarrowing(ids) {
 
@@ -1896,6 +1541,7 @@ function beginNarrowing(ids) {
     state.target =
       50;
 
+
     state.stage =
       "narrow";
 
@@ -1909,18 +1555,6 @@ function beginNarrowing(ids) {
     state.target =
       20;
 
-    state.stage =
-      "narrow";
-
-  }
-
-
-  else if (
-    ids.length > 9
-  ) {
-
-    state.target =
-      9;
 
     state.stage =
       "narrow";
@@ -1956,16 +1590,7 @@ function narrowingStep() {
   }
 
 
-  if (
-    state.target === 20
-  ) {
-
-    return 3;
-
-  }
-
-
-  return 4;
+  return 3;
 
 }
 
@@ -2002,7 +1627,6 @@ function renderNarrowing() {
     Math.ceil(
 
       state.pool.length /
-
       NARROW_SIZE
 
     );
@@ -2260,123 +1884,226 @@ function finishNarrowing() {
 
 
 /* =====================
-   最終9人 順位決定
+   20人から2択順位決定
 ===================== */
-  function startRanking(ids) {
 
-  if (ids.length !== 9) {
-    beginNarrowing(ids);
+function startRanking(ids) {
+
+  if (
+    ids.length < 9
+  ) {
+
+    alert(
+      "TOP9を決めるため、9人以上必要です。"
+    );
+
     return;
+
   }
 
-  state.stage = "rank";
-  state.rankPool = shuffle(ids);
-  state.ranked = [state.rankPool[0]];
-  state.insertIndex = 1;
-  state.comparePos = 0;
+
+  state.stage =
+    "rank";
+
+
+  state.rankPool =
+    shuffle(ids);
+
+
+  state.ranked =
+    [
+      state.rankPool[0]
+    ];
+
+
+  state.insertIndex =
+    1;
+
+
+  state.comparePos =
+    0;
+
 
   saveState();
+
+
   renderRanking();
+
 }
 
 
 function renderRanking() {
 
-  if (state.insertIndex >= state.rankPool.length) {
+  if (
+    state.insertIndex >=
+    state.rankPool.length
+  ) {
+
     finishResult();
+
     return;
+
   }
 
+
   const challenger =
-    state.rankPool[state.insertIndex];
+
+    state.rankPool[
+      state.insertIndex
+    ];
+
 
   const opponent =
-    state.ranked[state.comparePos];
+
+    state.ranked[
+      state.comparePos
+    ];
+
 
   app.innerHTML =
+
     progressHeader(4)
+
     +
+
     `
+
     <div class="panel">
 
       <div>
+
         <span class="badge">
-          順位決定
+          TOP9 順位決定
         </span>
 
         <h2>
           より好きな顔を選んでください
         </h2>
+
       </div>
 
+
       <div class="stats">
-        順位づけ
+
+        比較中
+
         <b>
-          ${state.insertIndex + 1}/9
+
+          ${state.insertIndex + 1}
+          /
+          ${state.rankPool.length}
+
         </b>
+
       </div>
 
     </div>
 
 
     <div class="duel-title">
+
       どっちがより好き？
+
     </div>
 
 
     <div class="duel">
 
-      ${personCard(
-        memberById(challenger),
-        false,
-        `chooseDuel(${challenger})`
-      )}
 
       ${personCard(
-        memberById(opponent),
+
+        memberById(
+          challenger
+        ),
+
         false,
-        `chooseDuel(${opponent})`
+
+        `chooseDuel(${challenger})`
+
       )}
+
+
+      ${personCard(
+
+        memberById(
+          opponent
+        ),
+
+        false,
+
+        `chooseDuel(${opponent})`
+
+      )}
+
 
     </div>
 
 
     <div class="notice">
-      タップした方を上位として並べていきます
+
+      20人を2択で比べて、
+      上位9人を決めます♡
+
     </div>
+
     `;
+
 }
 
 
 function chooseDuel(id) {
 
   const challenger =
-    state.rankPool[state.insertIndex];
 
-  if (id === challenger) {
+    state.rankPool[
+      state.insertIndex
+    ];
+
+
+  if (
+    id === challenger
+  ) {
 
     state.ranked.splice(
+
       state.comparePos,
+
       0,
+
+      challenger
+
+    );
+
+
+    state.insertIndex++;
+
+
+    state.comparePos =
+      0;
+
+  }
+
+
+  else if (
+
+    state.comparePos >=
+    state.ranked.length - 1
+
+  ) {
+
+    state.ranked.push(
       challenger
     );
 
+
     state.insertIndex++;
-    state.comparePos = 0;
+
+
+    state.comparePos =
+      0;
 
   }
 
-  else if (
-    state.comparePos >=
-    state.ranked.length - 1
-  ) {
-
-    state.ranked.push(challenger);
-
-    state.insertIndex++;
-    state.comparePos = 0;
-
-  }
 
   else {
 
@@ -2384,8 +2111,12 @@ function chooseDuel(id) {
 
   }
 
+
   saveState();
+
+
   renderRanking();
+
 }
 
 
@@ -2396,31 +2127,45 @@ function chooseDuel(id) {
 function finishResult() {
 
   state.result =
-    [...state.ranked];
+
+    [...state.ranked]
+      .slice(
+        0,
+        9
+      );
+
 
   state.stage =
     "result";
 
+
   let history = [];
+
 
   try {
 
     history =
       JSON.parse(
-        localStorage.getItem(HISTORY_KEY)
-        || "[]"
+        localStorage.getItem(
+          HISTORY_KEY
+        ) || "[]"
       );
 
   }
+
   catch {}
 
 
   history.unshift({
 
-    id: Date.now(),
+    id:
+      Date.now(),
 
     date:
-      new Date().toLocaleString("ja-JP"),
+      new Date()
+        .toLocaleString(
+          "ja-JP"
+        ),
 
     result:
       [...state.result]
@@ -2429,84 +2174,157 @@ function finishResult() {
 
 
   localStorage.setItem(
+
     HISTORY_KEY,
+
     JSON.stringify(
-      history.slice(0, 20)
+      history.slice(
+        0,
+        20
+      )
     )
+
   );
 
+
   saveState();
+
+
   renderResult();
+
 }
 
 
-function rankCard(member, index) {
+function rankCard(
+  member,
+  index
+) {
 
-  let rankClass = "";
+  let rankClass =
+    "";
 
-  if (index === 0) {
-    rankClass = "gold";
+
+  if (
+    index === 0
+  ) {
+
+    rankClass =
+      "gold";
+
   }
 
-  else if (index === 1) {
-    rankClass = "silver";
+  else if (
+    index === 1
+  ) {
+
+    rankClass =
+      "silver";
+
   }
 
-  else if (index === 2) {
-    rankClass = "bronze";
+  else if (
+    index === 2
+  ) {
+
+    rankClass =
+      "bronze";
+
   }
 
 
   return `
-    <div class="rank-card ${rankClass}">
+
+    <div
+      class="
+        rank-card
+        ${rankClass}
+      "
+    >
 
       <div class="rank-no">
+
         ${index + 1}
+
       </div>
+
 
       <div class="photo">
 
         <img
+
           src="${member.image}"
-          alt="${escapeHTML(member.name)}"
+
+          alt="${escapeHTML(
+            member.name
+          )}"
+
         >
 
       </div>
 
+
       <div class="info">
 
         <div
+
           class="group"
-          style="color:${member.color}"
+
+          style="
+            color:
+            ${member.color}
+          "
+
         >
-          ${escapeHTML(member.group)}
+
+          ${escapeHTML(
+            member.group
+          )}
+
         </div>
 
+
         <div class="name">
-          ${escapeHTML(member.name)}
+
+          ${escapeHTML(
+            member.name
+          )}
+
         </div>
 
       </div>
 
     </div>
+
   `;
+
 }
 
 
-function renderResult(ids = state.result) {
+function renderResult(
+  ids = state.result
+) {
 
   if (!ids) {
+
     renderHome();
+
     return;
+
   }
+
 
   state.result =
     [...ids];
 
+
   app.innerHTML =
+
     progressHeader(5)
+
     +
+
     `
+
     <div class="panel">
 
       <div>
@@ -2521,9 +2339,15 @@ function renderResult(ids = state.result) {
 
       </div>
 
+
       <div class="stats">
+
         TOP
-        <b>9</b>
+
+        <b>
+          9
+        </b>
+
       </div>
 
     </div>
@@ -2532,11 +2356,17 @@ function renderResult(ids = state.result) {
     <div class="rank-grid">
 
       ${ids.map(
-        (id, index) =>
+
+        (id,index) =>
+
           rankCard(
+
             memberById(id),
+
             index
+
           )
+
       ).join("")}
 
     </div>
@@ -2545,33 +2375,57 @@ function renderResult(ids = state.result) {
     <div class="actions">
 
       <button
+
         class="primary"
-        onclick="prepareResultImage()"
+
+        onclick="
+          prepareResultImage()
+        "
+
       >
+
         画像を保存する
+
       </button>
 
 
       <div class="row">
 
         <button
+
           class="secondary"
-          onclick="showHistory()"
+
+          onclick="
+            showHistory()
+          "
+
         >
+
           過去の結果
+
         </button>
 
+
         <button
+
           class="secondary"
-          onclick="goHome()"
+
+          onclick="
+            goHome()
+          "
+
         >
+
           トップへ戻る
+
         </button>
 
       </div>
 
     </div>
+
     `;
+
 }
 
 
@@ -2584,8 +2438,12 @@ function goHome() {
   state =
     freshState();
 
+
   saveState();
+
+
   renderHome();
+
 }
 
 
@@ -2597,22 +2455,29 @@ function showHistory() {
 
   let history = [];
 
+
   try {
 
     history =
       JSON.parse(
-        localStorage.getItem(HISTORY_KEY)
-        || "[]"
+        localStorage.getItem(
+          HISTORY_KEY
+        ) || "[]"
       );
 
   }
+
   catch {}
 
 
   app.innerHTML =
+
     progressHeader(5)
+
     +
+
     `
+
     <div class="panel">
 
       <div>
@@ -2633,43 +2498,81 @@ function showHistory() {
     <div class="history">
 
       ${history.map(
-        (item, index) => {
+
+        (item,index) => {
 
           const first =
-            memberById(item.result[0]);
+
+            memberById(
+              item.result[0]
+            );
+
 
           return `
-            <div class="history-item">
+
+            <div
+              class="history-item"
+            >
 
               <div>
 
                 <b>
+
                   ${
                     first
-                    ? escapeHTML(first.name)
-                    : "結果"
+
+                    ?
+
+                    escapeHTML(
+                      first.name
+                    )
+
+                    :
+
+                    "結果"
                   }
+
                 </b>
 
                 <br>
 
                 <small>
-                  ${escapeHTML(item.date)}
+
+                  ${escapeHTML(
+                    item.date
+                  )}
+
                 </small>
 
               </div>
 
+
               <button
+
                 class="secondary"
-                style="width:auto;"
-                onclick="openHistory(${index})"
+
+                style="
+                  width:auto;
+                "
+
+                onclick="
+                  openHistory(
+                    ${index}
+                  )
+                "
+
               >
+
                 この結果を見る
+
               </button>
 
             </div>
+
           `;
+
         }
+
       ).join("")}
 
     </div>
@@ -2678,33 +2581,63 @@ function showHistory() {
     <div class="actions">
 
       <button
+
         class="secondary"
-        onclick="renderHome()"
+
+        onclick="
+          renderHome()
+        "
+
       >
+
         戻る
+
       </button>
 
     </div>
+
     `;
+
 }
 
 
 function openHistory(index) {
 
   const history =
+
     JSON.parse(
-      localStorage.getItem(HISTORY_KEY)
-      || "[]"
+
+      localStorage.getItem(
+        HISTORY_KEY
+      )
+
+      ||
+
+      "[]"
+
     );
 
-  if (!history[index]) {
+
+  if (
+    !history[index]
+  ) {
+
     return;
+
   }
 
-  state.result =
-    [...history[index].result];
 
-  renderResult(state.result);
+  state.result =
+
+    [
+      ...history[index].result
+    ];
+
+
+  renderResult(
+    state.result
+  );
+
 }
 
 
@@ -2715,50 +2648,76 @@ function openHistory(index) {
 function loadImage(src) {
 
   return new Promise(
-    (resolve, reject) => {
+
+    (
+      resolve,
+      reject
+    ) => {
 
       const image =
         new Image();
 
+
       image.onload =
-        () => resolve(image);
+        () =>
+          resolve(image);
+
 
       image.onerror =
         reject;
+
 
       image.src =
         src;
 
     }
+
   );
+
 }
 
 
 /* =====================
-   Canvas 補助
+   Canvas補助
 ===================== */
 
 function roundedRectangle(
+
   context,
+
   x,
+
   y,
+
   width,
+
   height,
+
   radius,
+
   fill,
+
   stroke
+
 ) {
 
   context.beginPath();
 
-  if (context.roundRect) {
+
+  if (
+    context.roundRect
+  ) {
 
     context.roundRect(
+
       x,
       y,
+
       width,
       height,
+
       radius
+
     );
 
   }
@@ -2770,53 +2729,76 @@ function roundedRectangle(
       y
     );
 
+
     context.lineTo(
       x + width - radius,
       y
     );
 
+
     context.quadraticCurveTo(
+
       x + width,
       y,
+
       x + width,
       y + radius
+
     );
+
 
     context.lineTo(
+
       x + width,
       y + height - radius
+
     );
 
+
     context.quadraticCurveTo(
+
       x + width,
       y + height,
+
       x + width - radius,
       y + height
+
     );
+
 
     context.lineTo(
       x + radius,
       y + height
     );
 
+
     context.quadraticCurveTo(
+
       x,
       y + height,
+
       x,
       y + height - radius
+
     );
+
 
     context.lineTo(
       x,
       y + radius
     );
 
+
     context.quadraticCurveTo(
+
       x,
       y,
+
       x + radius,
       y
+
     );
+
 
     context.closePath();
 
@@ -2827,82 +2809,162 @@ function roundedRectangle(
     context.fill();
   }
 
+
   if (stroke) {
     context.stroke();
   }
+
 }
 
 
 function drawCover(
+
   context,
+
   image,
+
   x,
+
   y,
+
   width,
+
   height
+
 ) {
 
   const scale =
+
     Math.max(
-      width / image.width,
-      height / image.height
+
+      width /
+      image.width,
+
+      height /
+      image.height
+
     );
 
+
   const newWidth =
-    image.width * scale;
+    image.width *
+    scale;
+
 
   const newHeight =
-    image.height * scale;
+    image.height *
+    scale;
 
 
   context.drawImage(
+
     image,
 
-    x + (width - newWidth) / 2,
-    y + (height - newHeight) / 2,
+    x +
+    (
+      width -
+      newWidth
+    ) / 2,
+
+    y +
+    (
+      height -
+      newHeight
+    ) / 2,
 
     newWidth,
+
     newHeight
+
   );
+
 }
 
 
 /* =====================
-   TOP9画像を作る
+   ピンク版 TOP9画像
 ===================== */
 
 async function makeResultCanvas(
   ids = state.result
 ) {
 
-  if (!ids || ids.length !== 9) {
-    throw new Error("結果がありません");
+  if (
+    !ids ||
+    ids.length !== 9
+  ) {
+
+    throw new Error(
+      "結果がありません"
+    );
+
   }
 
 
   const width =
     1080;
 
+
   const height =
     1440;
 
 
   const canvas =
-    document.createElement("canvas");
+    document.createElement(
+      "canvas"
+    );
+
 
   canvas.width =
     width;
+
 
   canvas.height =
     height;
 
 
   const context =
-    canvas.getContext("2d");
+    canvas.getContext(
+      "2d"
+    );
+
+
+  /* 背景 */
+
+  const background =
+
+    context.createLinearGradient(
+
+      0,
+      0,
+
+      0,
+      height
+
+    );
+
+
+  background.addColorStop(
+    0,
+    "#fffafd"
+  );
+
+
+  background.addColorStop(
+    0.55,
+    "#fff4f8"
+  );
+
+
+  background.addColorStop(
+    1,
+    "#ffeef5"
+  );
 
 
   context.fillStyle =
-    "#fff9fc";
+    background;
+
 
   context.fillRect(
     0,
@@ -2912,40 +2974,343 @@ async function makeResultCanvas(
   );
 
 
-  context.textAlign =
-    "center";
+  /* ピンク装飾 */
 
-  context.fillStyle =
-    "#29293a";
+  function blob(
+    x,
+    y,
+    rx,
+    ry,
+    alpha
+  ) {
 
-  context.font =
-    '800 62px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+    context.save();
 
-  context.fillText(
-    "宝塚好き顔 9選",
-    width / 2,
-    95
+
+    context.globalAlpha =
+      alpha;
+
+
+    context.fillStyle =
+      "#ed77a5";
+
+
+    context.beginPath();
+
+
+    context.ellipse(
+
+      x,
+      y,
+
+      rx,
+      ry,
+
+      -0.18,
+
+      0,
+
+      Math.PI * 2
+
+    );
+
+
+    context.fill();
+
+
+    context.restore();
+
+  }
+
+
+  blob(
+    60,
+    80,
+    170,
+    42,
+    .11
   );
 
 
+  blob(
+    1030,
+    150,
+    175,
+    48,
+    .10
+  );
+
+
+  blob(
+    25,
+    730,
+    120,
+    50,
+    .07
+  );
+
+
+  blob(
+    1050,
+    810,
+    125,
+    52,
+    .08
+  );
+
+
+  blob(
+    90,
+    1375,
+    180,
+    44,
+    .07
+  );
+
+
+  /* キラキラ */
+
+  function sparkle(
+    x,
+    y,
+    size
+  ) {
+
+    context.save();
+
+
+    context.strokeStyle =
+      "#e8a1bb";
+
+
+    context.lineWidth =
+      2;
+
+
+    context.beginPath();
+
+
+    context.moveTo(
+      x,
+      y - size
+    );
+
+
+    context.lineTo(
+      x,
+      y + size
+    );
+
+
+    context.moveTo(
+      x - size,
+      y
+    );
+
+
+    context.lineTo(
+      x + size,
+      y
+    );
+
+
+    context.stroke();
+
+
+    context.restore();
+
+  }
+
+
+  sparkle(
+    70,
+    105,
+    11
+  );
+
+
+  sparkle(
+    1005,
+    105,
+    13
+  );
+
+
+  sparkle(
+    1015,
+    1280,
+    10
+  );
+
+
+  sparkle(
+    55,
+    1290,
+    9
+  );
+
+
+  /* 英字タイトル */
+
+  context.textAlign =
+    "center";
+
+
+  context.fillStyle =
+    "#b98b9d";
+
+
+  context.font =
+    '600 25px Georgia, serif';
+
+
+  context.fillText(
+
+    "M Y   T A K A R A Z U K A   T O P   9",
+
+    width / 2,
+
+    58
+
+  );
+
+
+  /* 日本語タイトル */
+
+  context.fillStyle =
+    "#4a3d47";
+
+
+  context.font =
+    '800 55px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+
+
+  context.fillText(
+
+    "宝塚 好き顔",
+
+    width / 2,
+
+    125
+
+  );
+
+
+  context.fillStyle =
+    "#ed6e9d";
+
+
+  context.font =
+    '800 68px -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
+
+
+  context.fillText(
+
+    "9選",
+
+    width / 2,
+
+    198
+
+  );
+
+
+  /* ハートとライン */
+
+  context.strokeStyle =
+    "#efb4c9";
+
+
+  context.lineWidth =
+    2;
+
+
+  context.beginPath();
+
+
+  context.moveTo(
+    260,
+    238
+  );
+
+
+  context.lineTo(
+    475,
+    238
+  );
+
+
+  context.moveTo(
+    605,
+    238
+  );
+
+
+  context.lineTo(
+    820,
+    238
+  );
+
+
+  context.stroke();
+
+
+  context.fillStyle =
+    "#e98aad";
+
+
+  context.font =
+    "29px serif";
+
+
+  context.fillText(
+
+    "♡",
+
+    width / 2,
+
+    247
+
+  );
+
+
+  /* =====================
+     3×3
+  ===================== */
+
   const margin =
-    54;
+    48;
+
 
   const gap =
-    22;
+    18;
+
 
   const cardWidth =
+
     (
       width
-      - margin * 2
-      - gap * 2
-    ) / 3;
+      -
+      margin * 2
+      -
+      gap * 2
+    )
+
+    /
+
+    3;
+
 
   const cardHeight =
-    380;
+    315;
+
+
+  const imageHeight =
+    222;
+
 
   const startY =
-    145;
+    278;
 
 
   for (
@@ -2955,7 +3320,11 @@ async function makeResultCanvas(
   ) {
 
     const member =
-      memberById(ids[index]);
+
+      memberById(
+        ids[index]
+      );
+
 
     if (!member) {
       continue;
@@ -2965,68 +3334,151 @@ async function makeResultCanvas(
     const column =
       index % 3;
 
+
     const row =
-      Math.floor(index / 3);
+      Math.floor(
+        index / 3
+      );
 
 
     const x =
+
       margin
+
       +
-      column
-      *
-      (cardWidth + gap);
+
+      column *
+      (
+        cardWidth +
+        gap
+      );
+
 
     const y =
+
       startY
+
       +
-      row
-      *
-      (cardHeight + gap);
+
+      row *
+      (
+        cardHeight +
+        20
+      );
 
 
-    let borderColor =
-      "#e9e4e8";
+    /* 白カード */
 
-    if (index === 0) {
-      borderColor = "#d7ad24";
-    }
+    context.save();
 
-    else if (index === 1) {
-      borderColor = "#aeb6c2";
-    }
 
-    else if (index === 2) {
-      borderColor = "#bf7a42";
-    }
+    context.shadowColor =
+      "rgba(126,76,98,.13)";
+
+
+    context.shadowBlur =
+      17;
+
+
+    context.shadowOffsetY =
+      6;
 
 
     context.fillStyle =
       "#ffffff";
 
-    context.strokeStyle =
-      borderColor;
+
+    roundedRectangle(
+
+      context,
+
+      x,
+      y,
+
+      cardWidth,
+      cardHeight,
+
+      22,
+
+      true,
+
+      false
+
+    );
+
+
+    context.restore();
+
+
+    /* 枠 */
+
+    if (
+      index === 0
+    ) {
+
+      context.strokeStyle =
+        "#d6b340";
+
+    }
+
+    else if (
+      index === 1
+    ) {
+
+      context.strokeStyle =
+        "#aebbc5";
+
+    }
+
+    else if (
+      index === 2
+    ) {
+
+      context.strokeStyle =
+        "#c78a62";
+
+    }
+
+    else {
+
+      context.strokeStyle =
+        "#efa6c0";
+
+    }
+
 
     context.lineWidth =
+
       index < 3
-      ? 9
+      ? 6
       : 4;
 
 
     roundedRectangle(
+
       context,
+
       x,
       y,
+
       cardWidth,
       cardHeight,
+
       22,
-      true,
+
+      false,
+
       true
+
     );
 
+
+    /* 写真 */
 
     try {
 
       const image =
+
         await loadImage(
           member.image
         );
@@ -3036,14 +3488,21 @@ async function makeResultCanvas(
 
 
       roundedRectangle(
+
         context,
-        x + 5,
-        y + 5,
-        cardWidth - 10,
-        275,
-        17,
+
+        x + 7,
+        y + 7,
+
+        cardWidth - 14,
+        imageHeight,
+
+        16,
+
         false,
+
         false
+
       );
 
 
@@ -3051,12 +3510,17 @@ async function makeResultCanvas(
 
 
       drawCover(
+
         context,
+
         image,
-        x + 5,
-        y + 5,
-        cardWidth - 10,
-        275
+
+        x + 7,
+        y + 7,
+
+        cardWidth - 14,
+        imageHeight
+
       );
 
 
@@ -3067,99 +3531,256 @@ async function makeResultCanvas(
     catch {}
 
 
-    context.fillStyle =
-      member.color;
-
-    context.font =
-      '800 26px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
-
-    context.fillText(
-      member.group,
-      x + cardWidth / 2,
-      y + 315
-    );
-
-
-    context.fillStyle =
-      "#29293a";
-
-    context.font =
-      '800 31px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
-
-    context.fillText(
-      member.name,
-      x + cardWidth / 2,
-      y + 355
-    );
-
-
-    if (index === 0) {
-      context.fillStyle = "#f5cf49";
-    }
-
-    else if (index === 1) {
-      context.fillStyle = "#dce1e7";
-    }
-
-    else if (index === 2) {
-      context.fillStyle = "#d99761";
-    }
-
-    else {
-      context.fillStyle = "#f4eff2";
-    }
-
+    /* 順位丸 */
 
     context.beginPath();
 
+
     context.arc(
-      x + 32,
-      y + 32,
-      25,
+
+      x + 30,
+
+      y + 30,
+
+      22,
+
       0,
+
       Math.PI * 2
+
     );
+
+
+    if (
+      index === 0
+    ) {
+
+      context.fillStyle =
+        "#f1cf59";
+
+    }
+
+    else if (
+      index === 1
+    ) {
+
+      context.fillStyle =
+        "#dce2e7";
+
+    }
+
+    else if (
+      index === 2
+    ) {
+
+      context.fillStyle =
+        "#dda078";
+
+    }
+
+    else {
+
+      context.fillStyle =
+        "#f7d4e1";
+
+    }
+
 
     context.fill();
 
 
     context.fillStyle =
-      "#29293a";
+      "#4a3d47";
+
 
     context.font =
-      "900 25px sans-serif";
+      "900 22px sans-serif";
+
 
     context.fillText(
-      String(index + 1),
-      x + 32,
-      y + 41
+
+      String(
+        index + 1
+      ),
+
+      x + 30,
+
+      y + 38
+
     );
+
+
+    /* 組名 */
+
+    context.fillStyle =
+
+      member.color
+
+      ||
+
+      "#d66b96";
+
+
+    context.font =
+      '800 19px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
+
+
+    context.fillText(
+
+      member.group,
+
+      x +
+      cardWidth / 2,
+
+      y + 255
+
+    );
+
+
+    /* 名前 */
+
+    context.fillStyle =
+      "#403744";
+
+
+    context.font =
+      '800 25px -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif';
+
+
+    context.fillText(
+
+      member.name,
+
+      x +
+      cardWidth / 2,
+
+      y + 288
+
+    );
+
   }
 
 
+  /* =====================
+     下部
+  ===================== */
+
+  context.strokeStyle =
+    "#efb4c9";
+
+
+  context.lineWidth =
+    2;
+
+
+  context.beginPath();
+
+
+  context.moveTo(
+    300,
+    1335
+  );
+
+
+  context.lineTo(
+    470,
+    1335
+  );
+
+
+  context.moveTo(
+    610,
+    1335
+  );
+
+
+  context.lineTo(
+    780,
+    1335
+  );
+
+
+  context.stroke();
+
+
   context.fillStyle =
-    "#a68d99";
+    "#e98aad";
+
 
   context.font =
-    "500 22px sans-serif";
+    "30px serif";
+
 
   context.fillText(
-    new Date().toLocaleDateString("ja-JP"),
+
+    "✧",
+
     width / 2,
-    height - 28
+
+    1345
+
+  );
+
+
+  /* 日付 */
+
+  const today =
+
+    new Date()
+
+      .toLocaleDateString(
+
+        "ja-JP",
+
+        {
+
+          year:"numeric",
+
+          month:"2-digit",
+
+          day:"2-digit"
+
+        }
+
+      )
+
+      .replaceAll(
+        "/",
+        "."
+      );
+
+
+  context.fillStyle =
+    "#aa8d99";
+
+
+  context.font =
+    '500 22px Georgia, serif';
+
+
+  context.fillText(
+
+    today,
+
+    width / 2,
+
+    1395
+
   );
 
 
   return canvas;
+
 }
 
 
 /* =====================
-   iPhone用 画像保存
+   iPhone用画像保存
 ===================== */
 
 let preparedImageFile =
   null;
+
 
 let preparedImageURL =
   null;
@@ -3170,47 +3791,69 @@ async function prepareResultImage() {
   try {
 
     const canvas =
+
       await makeResultCanvas(
         state.result
       );
 
 
     const blob =
+
       await new Promise(
+
         resolve =>
+
           canvas.toBlob(
+
             resolve,
+
             "image/png"
+
           )
+
       );
 
 
     if (!blob) {
+
       throw new Error(
         "画像を作成できませんでした"
       );
+
     }
 
 
     preparedImageFile =
+
       new File(
+
         [blob],
+
         "takarazuka-top9.png",
+
         {
           type:"image/png"
         }
+
       );
 
 
-    if (preparedImageURL) {
+    if (
+      preparedImageURL
+    ) {
+
       URL.revokeObjectURL(
         preparedImageURL
       );
+
     }
 
 
     preparedImageURL =
-      URL.createObjectURL(blob);
+
+      URL.createObjectURL(
+        blob
+      );
 
 
     showImagePreview();
@@ -3223,16 +3866,23 @@ async function prepareResultImage() {
       "画像の作成に失敗しました。"
     );
 
-    console.error(error);
+
+    console.error(
+      error
+    );
 
   }
+
 }
 
 
 function showImagePreview() {
 
   const overlay =
-    document.createElement("div");
+
+    document.createElement(
+      "div"
+    );
 
 
   overlay.className =
@@ -3242,8 +3892,11 @@ function showImagePreview() {
   overlay.innerHTML = `
 
     <img
+
       src="${preparedImageURL}"
+
       alt="宝塚好き顔9選"
+
     >
 
 
@@ -3267,61 +3920,98 @@ function showImagePreview() {
     <div class="preview-buttons">
 
       <button
+
         class="primary"
-        onclick="sharePreparedImage()"
+
+        onclick="
+          sharePreparedImage()
+        "
+
       >
+
         共有して保存
+
       </button>
 
 
       <button
+
         class="secondary"
-        style="margin-top:8px;"
-        onclick="closeImagePreview()"
+
+        style="
+          margin-top:8px;
+        "
+
+        onclick="
+          closeImagePreview()
+        "
+
       >
+
         閉じる
+
       </button>
 
     </div>
+
   `;
 
 
   document.body.appendChild(
     overlay
   );
+
 }
 
 
 async function sharePreparedImage() {
 
-  if (!preparedImageFile) {
+  if (
+    !preparedImageFile
+  ) {
+
     return;
+
   }
 
 
   if (
+
     navigator.share
+
     &&
+
     (
+
       !navigator.canShare
+
       ||
+
       navigator.canShare({
+
         files:[
           preparedImageFile
         ]
+
       })
+
     )
+
   ) {
 
     try {
 
       await navigator.share({
+
         files:[
           preparedImageFile
         ],
+
         title:
           "宝塚好き顔 9選"
+
       });
+
 
       return;
 
@@ -3330,10 +4020,14 @@ async function sharePreparedImage() {
     catch (error) {
 
       if (
+
         error.name ===
         "AbortError"
+
       ) {
+
         return;
+
       }
 
     }
@@ -3344,19 +4038,25 @@ async function sharePreparedImage() {
   alert(
     "上の画像を長押しして「写真に保存」を選んでね！"
   );
+
 }
 
 
 function closeImagePreview() {
 
   const preview =
+
     document.querySelector(
       ".image-preview"
     );
 
+
   if (preview) {
+
     preview.remove();
+
   }
+
 }
 
 
@@ -3366,34 +4066,61 @@ function closeImagePreview() {
 
 function render() {
 
-  if (state.stage === "home") {
+  if (
+    state.stage === "home"
+  ) {
+
     renderHome();
+
   }
 
-  else if (state.stage === "prelim") {
+
+  else if (
+    state.stage === "prelim"
+  ) {
+
     renderPreliminary();
+
   }
 
-  else if (state.stage === "narrow") {
+
+  else if (
+    state.stage === "narrow"
+  ) {
+
     renderNarrowing();
+
   }
 
-  else if (state.stage === "rank") {
+
+  else if (
+    state.stage === "rank"
+  ) {
+
     renderRanking();
+
   }
 
-  else if (state.stage === "result") {
+
+  else if (
+    state.stage === "result"
+  ) {
+
     renderResult();
+
   }
+
 
   else {
+
     renderHome();
+
   }
+
 }
 
 
 render();
-
 
 </script>
 
